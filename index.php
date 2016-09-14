@@ -32,22 +32,24 @@ include "php/baglan.php";
         <div class="row">
             <?
                 $html="";
-                $orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.uye_id;");
+                $orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id;");
 
                 while($orijinal_metinler = mysqli_fetch_object($orijinal_metinler_sql)){
-                    $orijinal_metin_id = $orijinal_metinler->id;
+                    $orijinal_metin_id = $orijinal_metinler->orijinal_metin_id;
                     $orijinal_metin = $orijinal_metinler->orijinal_metin;
                     $baslik = $orijinal_metinler->baslik;
-                    $uye_id = $orijinal_metinler->uye_id;
-                    $uye_notu = $orijinal_metinler->uye_notu;
+                    $metin_sahibi_id = $orijinal_metinler->metin_sahibi_id;
+                    $metin_sahibi_notu = $orijinal_metinler->metin_sahibi_notu;
                     $guncellenme_tarihi = $orijinal_metinler->guncellenme_tarihi;
                     $adi_soyadi = $orijinal_metinler->adi_soyadi;
+                    $orijinal_dil_id = $orijinal_metinler->orijinal_dil_id;
+                    $cevrilecek_dil_id = $orijinal_metinler->cevrilecek_dil_id;
                     $profil_resmi = $orijinal_metinler->profil_resmi != ""?"$orijinal_metinler->profil_resmi":"resimler/kullanici_resmi_50x50.png";
                     $orijinal_metin = substr($orijinal_metin,0,150);
 
                     $html.="<div class='col s4 kart'>
-                                <div class='card-panel hoverable'>
-                                    <h6>$baslik</h6>
+                                <div class='card-panel hoverable teal lighten-5'>
+                                    <h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
                                     <span class='kart-aciklama blue-text text-darken-2'>$orijinal_metin</span>
                                     <div class='kart-alt'>
                                         <div class='chip'>
@@ -106,20 +108,17 @@ include "php/baglan.php";
             <span class="blue-text text-darken-2 orijinal-metin-uye-notu"></span>
         </div>
         <div class="orijinal-metin">deneme orijinal metin</div>
-
     </div>
     <div class="cevrilen-metin-divi col s6">
         <h5 class="cevrilen-metin-baslik">Deneme başlık</h5>
-        <div class="input-field">
-            <label for="cevirmen-notu" class="blue-text text-lighten-1">Diğer çevirmenlere ve metin sahibine notun varsa buraya yaz</label>
-            <textarea name="cevirmen-notu" class="materialize-textarea" id="cevirmen-notu"></textarea>
-        </div>
         <div class="input-field cevrilen-metin-input">
             <label for="cevrilen-metin" class="blue-text text-lighten-1">Çevirini buraya yaz</label>
             <textarea name="cevrilen-metin" class="materialize-textarea cevrilen-metin" id="cevrilen-metin"></textarea>
         </div>
-        <a class="btn-floating btn-large waves-effect waves-light green kaydet" data-position="top" data-delay="50" data-tooltip="Kaydet"><i class="material-icons">save</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light green kaydet tooltipped" data-position="top" data-delay="50" data-tooltip="Ctrl+S ile de kaydedebilirsin"><i class="material-icons">save</i></a>
     </div>
+    <div class="ceviri-kapsayici-kapat tooltipped" data-position="left" data-delay="50" data-tooltip="Esc'ye basarak da kapatabilirsin">✖</div>
+    <i class="material-icons yorumlari-gor tooltipped" data-position="left" data-delay="50" data-tooltip="Yorumları gör">comment</i>
     <input type="hidden" id="orijinal-metin-id">
     <input type="hidden" id="cevrilecek-dil-id">
 </div>
@@ -129,5 +128,18 @@ include "php/baglan.php";
 <script src="materialize/js/materialize.js"></script>
 <script src="materialize/js/init.js"></script>
 <inpu type="hidden" value="1" id="uye_id"></inpu>
+<!-- Modal Structure -->
+<div id="yorumlar-modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5>Yorumlar</h5>
+        <p class="yorumlar-modal-ic">A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+        <div class="input-field cevirmen-notu-input-field">
+            <label for="cevirmen-yorumu" class="cevirmen-yorumu-label blue-text text-lighten-1">Yorumunu yaz</label>
+            <textarea name="cevirmen-yorumu" class="materialize-textarea" id="cevirmen-yorumu"></textarea>
+        </div>
+    </div>
+</div>
 </body>
 </html>
