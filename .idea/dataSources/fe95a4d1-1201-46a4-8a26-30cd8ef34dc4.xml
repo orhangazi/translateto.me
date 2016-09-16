@@ -195,7 +195,7 @@
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="54" parent="17" name="cevirmen_id">
+    <column id="54" parent="17" name="yorum_sahibi_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>

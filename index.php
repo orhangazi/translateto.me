@@ -6,6 +6,26 @@
  * Time: 20:24
  */
 include "php/baglan.php";
+
+$cikis = $_GET['cikis'];
+if(isset($cikis)){
+    session_destroy();
+}
+
+$eposta = $_SESSION["eposta"];
+if($eposta!=""){
+    $kullanici_bilgileri_sql = mysqli_query($baglan,"select * from uyeler where eposta='$eposta' limit 1");
+    $kullanici_bilgileri = mysqli_fetch_object($kullanici_bilgileri_sql);
+
+    $uye_id = $kullanici_bilgileri->id;
+    $adi_soyadi = $kullanici_bilgileri->adi_soyadi;
+    $profil_resmi = $kullanici_bilgileri->profil_resmi;
+    $profil_resmi = $profil_resmi!=""?"$profil_resmi":"resimler/kullanici_resmi_50x50.png";
+	$giris_yapilmis_mi = true;
+}
+else{
+	$giris_yapilmis_mi = false;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +43,7 @@ include "php/baglan.php";
 <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="#">Orhan Gazi</a></li>
+            <li><a class="giris-kayit-divini-ac">Giriş Yap ya da Kayıt Ol</a></li>
         </ul>
     </div>
 </nav>
@@ -122,12 +142,53 @@ include "php/baglan.php";
     <input type="hidden" id="orijinal-metin-id">
     <input type="hidden" id="cevrilecek-dil-id">
 </div>
-<!--  Scripts-->
-<script src="jquery3/jquery-3.1.0.min.js"></script>
-<script src="js/islemler.js"></script>
-<script src="materialize/js/materialize.js"></script>
-<script src="materialize/js/init.js"></script>
-<inpu type="hidden" value="1" id="uye_id"></inpu>
+<div class="giris-kayit-divi row">
+    <div class="giris-kayit-divi-form col s3">
+        <div class="giris-kayit-divi-kapat">✖</div>
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="#kayit-ol">Kayıt Ol</a></li>
+                    <li class="tab col s3"><a href="#giris-yap">Giriş Yap</a></li>
+                </ul>
+            </div>
+            <div id="kayit-ol" class="col s12">
+                <form id="kaydolma-formu">
+                    <div class="input-field col s12">
+                        <input id="adi-soyadi-form" type="text" name="adi-soyadi" class="validate">
+                        <label for="adi-soyadi-form" class="blue-text">Adın ve soyadın</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="eposta" type="email" name="eposta" class="validate">
+                        <label for="eposta" class="blue-text">E-postan</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="sifre" type="password" name="sifre" class="validate">
+                        <label for="sifre" class="blue-text">Şifren</label>
+                    </div>
+                    <button class="waves-effect waves-light btn">Kaydol</button>
+                    <div class="kayit-durumu"></div>
+                    <input type="hidden" name="kayit-yap" value="true">
+                </form>
+            </div>
+            <div id="giris-yap" class="col s12">
+                <form id="giris-formu">
+                    <div class="input-field col s12">
+                        <input id="eposta" type="email" name="eposta" class="validate">
+                        <label for="eposta" class="blue-text">E-postan</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="sifre" type="password" name="sifre" class="validate">
+                        <label for="sifre" class="blue-text">Şifren</label>
+                    </div>
+                    <button class="waves-effect waves-light btn" role="button">Giriş Yap</button>
+                    <span class="giris-durumu"></span>
+                    <input type="hidden" name="giris-yap" value="true">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal Structure -->
 <div id="yorumlar-modal" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -135,11 +196,19 @@ include "php/baglan.php";
         <p class="yorumlar-modal-ic">A bunch of text</p>
     </div>
     <div class="modal-footer">
-        <div class="input-field cevirmen-notu-input-field">
-            <label for="cevirmen-yorumu" class="cevirmen-yorumu-label blue-text text-lighten-1">Yorumunu yaz</label>
-            <textarea name="cevirmen-yorumu" class="materialize-textarea" id="cevirmen-yorumu"></textarea>
+        <div class="input-field yorum-input-field">
+            <label for="yorum" class="yorum-label blue-text text-lighten-1">Yorumunu yaz</label>
+            <textarea name="cevirmen-yorumu" class="materialize-textarea" id="yorum"></textarea>
         </div>
     </div>
 </div>
+<input type="hidden" value="<? echo $uye_id ?>" id="uye-id">
+<input type="hidden" value="<? echo $adi_soyadi ?>" id="adi-soyadi">
+<input type="hidden" value="<? echo $profil_resmi ?>" id="profil-resmi">
+<!--  Scripts-->
+<script src="jquery3/jquery-3.1.0.min.js"></script>
+<script src="js/islemler.js"></script>
+<script src="materialize/js/materialize.js"></script>
+<script src="materialize/js/init.js"></script>
 </body>
 </html>

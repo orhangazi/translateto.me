@@ -2,15 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a331765-0a11-4926-8b7b-8792908676ca" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/translateto.me.iml" afterPath="$PROJECT_DIR$/.idea/translateto.me.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/islemler.js" afterPath="$PROJECT_DIR$/js/islemler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/materialize/css/style.css" afterPath="$PROJECT_DIR$/materialize/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/islemler.php" afterPath="$PROJECT_DIR$/php/islemler.php" />
     </list>
     <ignored path="translateto.me.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
+    <ignored path="php/baglan.php" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,44 +33,6 @@
     <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
     <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="MySQL - translateto@localhost" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="MySQL - translateto@localhost" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="yorumlar" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-    </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="MySQL - translateto@localhost" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="uyeler" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-    </PATH>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -73,22 +40,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="138" column="108" selection-start-line="138" selection-start-column="108" selection-end-line="138" selection-end-column="108" />
+            <state relative-caret-position="1107">
+              <caret line="70" column="31" selection-start-line="70" selection-start-column="31" selection-end-line="70" selection-end-column="31" />
               <folding>
-                <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-                <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-                <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-                <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-                <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-                <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-                <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-                <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-                <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-                <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+                <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+                <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+                <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+                <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+                <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
               </folding>
             </state>
           </provider>
@@ -97,8 +67,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/materialize/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="106" column="28" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+            <state relative-caret-position="0">
+              <caret line="172" column="27" selection-start-line="172" selection-start-column="26" selection-end-line="172" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -107,38 +77,41 @@
       <file leaf-file-name="islemler.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/php/islemler.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="119" column="43" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
+            <state relative-caret-position="0">
+              <caret line="218" column="2" selection-start-line="218" selection-start-column="2" selection-end-line="218" selection-end-column="2" />
               <folding>
-                <marker date="1473812969358" expanded="true" signature="327:344" ph="select * fro... original_metinler" />
-                <marker date="1473812969358" expanded="true" signature="327:405" ph="select * fro... orijinal_metinler" />
-                <marker date="1473812969358" expanded="true" signature="327:485" ph="select * fro... orijinal_metinler" />
-                <marker date="1473812969358" expanded="true" signature="2325:2366" ph="select * fro... orijinal_metinler" />
-                <marker date="1473812969358" expanded="true" signature="4112:4170" ph="select id fr... cevrilmis_metinler" />
-                <marker date="1473812969358" expanded="true" signature="4112:4171" ph="select id fr... cevrilmis_metinler" />
-                <marker date="1473812969358" expanded="true" signature="4283:4347" ph="update cevri... " />
-                <marker date="1473812969358" expanded="true" signature="4283:4372" ph="update cevri... " />
-                <marker date="1473812969358" expanded="true" signature="4283:4373" ph="update cevri... " />
-                <marker date="1473812969358" expanded="true" signature="4616:4757" ph="insert into cevrilmis_metinler... " />
-                <marker date="1473812969358" expanded="true" signature="5243:5290" ph="select id fr... cevrilmis_metinler" />
-                <marker date="1473812969358" expanded="true" signature="5410:5464" ph="select * fro... yorumlar" />
-                <marker date="1473812969358" expanded="true" signature="5410:5519" ph="select * fro... yorumlar" />
-                <marker date="1473812969358" expanded="true" signature="5446:5464" ph="update cevri... " />
-                <marker date="1473812969358" expanded="true" signature="5939:6275" ph="..." />
-                <marker date="1473812969358" expanded="true" signature="6003:6245" ph="..." />
-                <marker date="1473812969358" expanded="true" signature="6201:6211" ph="..." />
+                <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+                <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+                <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+                <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+                <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+                <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+                <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+                <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+                <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+                <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+                <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+                <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+                <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+                <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+                <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+                <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+                <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+                <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+                <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="islemler.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="islemler.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/islemler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="131" column="56" selection-start-line="131" selection-start-column="56" selection-end-line="131" selection-end-column="56" />
+            <state relative-caret-position="0">
+              <caret line="123" column="18" selection-start-line="123" selection-start-column="12" selection-end-line="123" selection-end-column="18" />
               <folding>
-                <marker date="1473812908706" expanded="true" signature="4616:4634" ph="..." />
+                <element signature="e#263#1046#0" expanded="false" />
+                <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
               </folding>
             </state>
           </provider>
@@ -170,9 +143,9 @@
         <option value="$PROJECT_DIR$/php/baglan.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4/console.sql" />
         <option value="$PROJECT_DIR$/materialize/css/style.css" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/js/islemler.js" />
         <option value="$PROJECT_DIR$/php/islemler.php" />
+        <option value="$PROJECT_DIR$/js/islemler.js" />
+        <option value="$PROJECT_DIR$/index.php" />
       </list>
     </option>
   </component>
@@ -187,7 +160,6 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true">
     <include_path>
-      <path value="" />
       <path value="C:\xampp\php" />
     </include_path>
   </component>
@@ -205,12 +177,15 @@
             <id />
           </State>
           <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
             <id>Spelling</id>
           </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>CSS</id>
+            <id>Probable bugsJavaScript</id>
           </State>
         </selected-state>
       </profile-state>
@@ -243,16 +218,21 @@
     <panes />
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.splitter.proportion" value="0.23168316" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../php" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/php/baglan.php" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
     <property name="JavaScriptPreferStrict" value="false" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;null&#9;null" />
+    <property name="prop_add_unversioned_files" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug.index.php">
+    <configuration default="false" name="index.php" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/translateto.me/index.php">
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
@@ -302,6 +282,14 @@
       <recursive>false</recursive>
       <method />
     </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.php" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -326,6 +314,21 @@
       <workItem from="1473764197860" duration="19797000" />
       <workItem from="1473796093072" duration="6378000" />
       <workItem from="1473805522311" duration="7933000" />
+      <workItem from="1473839523735" duration="17934000" />
+      <workItem from="1473878926012" duration="1919000" />
+      <workItem from="1473885294929" duration="5002000" />
+      <workItem from="1473923979506" duration="11708000" />
+      <workItem from="1473946317581" duration="7262000" />
+      <workItem from="1473968151224" duration="9255000" />
+      <workItem from="1473978413165" duration="1185000" />
+      <workItem from="1473979735877" duration="666000" />
+      <workItem from="1473980538246" duration="685000" />
+      <workItem from="1473981259514" duration="60000" />
+      <workItem from="1473981534554" duration="156000" />
+      <workItem from="1474014373177" duration="945000" />
+      <workItem from="1474015392400" duration="427000" />
+      <workItem from="1474015855438" duration="470000" />
+      <workItem from="1474016361520" duration="43000" />
     </task>
     <task id="LOCAL-00001" summary="orjinal metni görme, çeviri yapma ve güncelleme gibi çok temel şeyler yapılabilir hale geldi.">
       <created>1473636421424</created>
@@ -338,7 +341,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="110166000" />
+    <option name="totallyTimeSpent" value="167883000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -353,13 +356,13 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.119335346" sideWeight="0.49429038" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18277946" sideWeight="0.49429038" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5030211" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15785499" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967373" sideWeight="0.50453174" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15785499" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.49697885" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29690048" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15634441" sideWeight="0.50570965" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -371,9 +374,9 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967373" sideWeight="0.4954683" order="4" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -434,26 +437,137 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/php/islemler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2880">
+          <caret line="144" column="14" selection-start-line="144" selection-start-column="14" selection-end-line="144" selection-end-column="14" />
+          <folding>
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/islemler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3620">
+          <caret line="181" column="0" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
+          <folding>
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2760">
+          <caret line="138" column="108" selection-start-line="138" selection-start-column="108" selection-end-line="138" selection-end-column="108" />
+          <folding>
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/materialize/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2120">
+          <caret line="106" column="28" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/islemler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2380">
+          <caret line="119" column="43" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
+          <folding>
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/islemler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2480">
           <caret line="124" column="118" selection-start-line="124" selection-start-column="118" selection-end-line="124" selection-end-column="118" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -471,23 +585,25 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812969358" expanded="true" signature="327:344" ph="select * fro... original_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:405" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:485" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="2325:2366" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4170" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4171" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4283:4347" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4372" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4373" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4616:4757" ph="insert into cevrilmis_metinler... " />
-            <marker date="1473812969358" expanded="true" signature="5243:5290" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="5410:5464" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5410:5519" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5446:5464" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="5939:6275" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6003:6245" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6201:6211" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
           </folding>
         </state>
       </provider>
@@ -497,7 +613,8 @@
         <state relative-caret-position="2280">
           <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding>
-            <marker date="1473812908706" expanded="true" signature="4616:4634" ph="..." />
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
           </folding>
         </state>
       </provider>
@@ -507,16 +624,19 @@
         <state relative-caret-position="2420">
           <caret line="121" column="141" selection-start-line="121" selection-start-column="141" selection-end-line="121" selection-end-column="141" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -534,23 +654,25 @@
         <state relative-caret-position="1000">
           <caret line="50" column="64" selection-start-line="50" selection-start-column="64" selection-end-line="50" selection-end-column="64" />
           <folding>
-            <marker date="1473812969358" expanded="true" signature="327:344" ph="select * fro... original_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:405" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:485" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="2325:2366" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4170" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4171" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4283:4347" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4372" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4373" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4616:4757" ph="insert into cevrilmis_metinler... " />
-            <marker date="1473812969358" expanded="true" signature="5243:5290" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="5410:5464" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5410:5519" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5446:5464" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="5939:6275" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6003:6245" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6201:6211" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
           </folding>
         </state>
       </provider>
@@ -560,7 +682,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812908706" expanded="true" signature="4616:4634" ph="..." />
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
           </folding>
         </state>
       </provider>
@@ -570,16 +693,19 @@
         <state relative-caret-position="2480">
           <caret line="124" column="46" selection-start-line="124" selection-start-column="29" selection-end-line="124" selection-end-column="46" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -609,23 +735,25 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812969358" expanded="true" signature="327:344" ph="select * fro... original_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:405" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:485" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="2325:2366" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4170" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4171" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4283:4347" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4372" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4373" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4616:4757" ph="insert into cevrilmis_metinler... " />
-            <marker date="1473812969358" expanded="true" signature="5243:5290" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="5410:5464" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5410:5519" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5446:5464" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="5939:6275" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6003:6245" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6201:6211" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
           </folding>
         </state>
       </provider>
@@ -635,7 +763,8 @@
         <state relative-caret-position="720">
           <caret line="36" column="73" selection-start-line="36" selection-start-column="73" selection-end-line="36" selection-end-column="73" />
           <folding>
-            <marker date="1473812908706" expanded="true" signature="4616:4634" ph="..." />
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
           </folding>
         </state>
       </provider>
@@ -645,16 +774,19 @@
         <state relative-caret-position="2400">
           <caret line="120" column="106" selection-start-line="120" selection-start-column="92" selection-end-line="120" selection-end-column="106" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -684,23 +816,25 @@
         <state relative-caret-position="740">
           <caret line="37" column="44" selection-start-line="37" selection-start-column="44" selection-end-line="37" selection-end-column="44" />
           <folding>
-            <marker date="1473812969358" expanded="true" signature="327:344" ph="select * fro... original_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:405" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:485" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="2325:2366" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4170" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4171" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4283:4347" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4372" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4373" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4616:4757" ph="insert into cevrilmis_metinler... " />
-            <marker date="1473812969358" expanded="true" signature="5243:5290" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="5410:5464" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5410:5519" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5446:5464" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="5939:6275" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6003:6245" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6201:6211" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
           </folding>
         </state>
       </provider>
@@ -710,7 +844,8 @@
         <state relative-caret-position="620">
           <caret line="31" column="70" selection-start-line="31" selection-start-column="70" selection-end-line="31" selection-end-column="70" />
           <folding>
-            <marker date="1473812908706" expanded="true" signature="4616:4634" ph="..." />
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
           </folding>
         </state>
       </provider>
@@ -720,16 +855,19 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -747,16 +885,19 @@
         <state relative-caret-position="2360">
           <caret line="118" column="4" selection-start-line="118" selection-start-column="4" selection-end-line="118" selection-end-column="4" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -774,23 +915,25 @@
         <state relative-caret-position="180">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <marker date="1473812969358" expanded="true" signature="327:344" ph="select * fro... original_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:405" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:485" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="2325:2366" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4170" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4171" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4283:4347" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4372" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4373" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4616:4757" ph="insert into cevrilmis_metinler... " />
-            <marker date="1473812969358" expanded="true" signature="5243:5290" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="5410:5464" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5410:5519" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5446:5464" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="5939:6275" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6003:6245" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6201:6211" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
           </folding>
         </state>
       </provider>
@@ -800,7 +943,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812908706" expanded="true" signature="4616:4634" ph="..." />
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
           </folding>
         </state>
       </provider>
@@ -810,16 +954,19 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -829,16 +976,19 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
@@ -848,46 +998,29 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html" />
-    <entry file="dbDummy://dbtable:/37fa6c55/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4/translateto.uyeler">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php/baglan.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/package.json" />
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/core-scripting.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -917,68 +1050,171 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/materialize/css/style.css">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_github.com_DefinitelyTyped_DefinitelyTyped_raw_master_jquery_jquery.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="106" column="28" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+        <state relative-caret-position="-1440">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="14" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="138" column="108" selection-start-line="138" selection-start-column="108" selection-end-line="138" selection-end-column="108" />
-          <folding>
-            <marker date="1473812243104" expanded="true" signature="1191:1344" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="1191:1359" ph="select *,uye... orijinal_metinler" />
-            <marker date="1473812243104" expanded="true" signature="2396:3394" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2478:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2480:3359" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2605:2632" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3163" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2819:3320" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="2878:3114" ph="..." />
-            <marker date="1473812243104" expanded="true" signature="4046:4080" ph="..." />
-          </folding>
+    <entry file="dbDummy://dbtable:/37fa6c55/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4/translateto.orijinal_metinler">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/islemler.php">
+    <entry file="dbDummy://dbtable:/37fa6c55/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4/translateto.orijinal_metinler">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/37fa6c55/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4/translateto.orijinal_metinler">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/baglan.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="119" column="43" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
-          <folding>
-            <marker date="1473812969358" expanded="true" signature="327:344" ph="select * fro... original_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:405" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="327:485" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="2325:2366" ph="select * fro... orijinal_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4170" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4112:4171" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="4283:4347" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4372" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4283:4373" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="4616:4757" ph="insert into cevrilmis_metinler... " />
-            <marker date="1473812969358" expanded="true" signature="5243:5290" ph="select id fr... cevrilmis_metinler" />
-            <marker date="1473812969358" expanded="true" signature="5410:5464" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5410:5519" ph="select * fro... yorumlar" />
-            <marker date="1473812969358" expanded="true" signature="5446:5464" ph="update cevri... " />
-            <marker date="1473812969358" expanded="true" signature="5939:6275" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6003:6245" ph="..." />
-            <marker date="1473812969358" expanded="true" signature="6201:6211" ph="..." />
-          </folding>
+        <state relative-caret-position="140">
+          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/37fa6c55/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4/translateto.orijinal_metinler">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/37fa6c55/fe95a4d1-1201-46a4-8a26-30cd8ef34dc4/translateto.uyeler">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/islemler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="131" column="56" selection-start-line="131" selection-start-column="56" selection-end-line="131" selection-end-column="56" />
+        <state relative-caret-position="0">
+          <caret line="123" column="18" selection-start-line="123" selection-start-column="12" selection-end-line="123" selection-end-column="18" />
           <folding>
-            <marker date="1473812908706" expanded="true" signature="4616:4634" ph="..." />
+            <element signature="e#263#1046#0" expanded="false" />
+            <marker date="1473977042973" expanded="true" signature="7639:7657" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/materialize/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="172" column="27" selection-start-line="172" selection-start-column="26" selection-end-line="172" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/islemler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="218" column="2" selection-start-line="218" selection-start-column="2" selection-end-line="218" selection-end-column="2" />
+          <folding>
+            <marker date="1473975079769" expanded="true" signature="383:400" ph="select * fro... original_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:461" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="383:541" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="2381:2422" ph="select * fro... orijinal_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4267" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4209:4268" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="4380:4444" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4469" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4380:4470" ph="update cevri... " />
+            <marker date="1473975079769" expanded="true" signature="4709:4850" ph="insert into cevrilmis_metinler... " />
+            <marker date="1473975079769" expanded="true" signature="5354:5401" ph="select id fr... cevrilmis_metinler" />
+            <marker date="1473975079769" expanded="true" signature="5472:5585" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="5472:5610" ph="select * fro... yorumlar" />
+            <marker date="1473975079769" expanded="true" signature="6075:6411" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6139:6381" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6337:6347" ph="..." />
+            <marker date="1473975079769" expanded="true" signature="6935:7053" ph="insert into yorumlar... " />
+            <marker date="1473975079769" expanded="true" signature="7804:7888" ph="insert into uyeler... " />
+            <marker date="1473975079769" expanded="true" signature="8694:8756" ph="select epost... uyeler" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1107">
+          <caret line="70" column="31" selection-start-line="70" selection-start-column="31" selection-end-line="70" selection-end-column="31" />
+          <folding>
+            <marker date="1473980979613" expanded="true" signature="291:333" ph="select * fro... uyler" />
+            <marker date="1473980979613" expanded="true" signature="291:342" ph="select * fro... uyeler" />
+            <marker date="1473980979613" expanded="true" signature="769:791" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="1835:1988" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="1835:2003" ph="select *,uye... orijinal_metinler" />
+            <marker date="1473980979613" expanded="true" signature="3040:4038" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3122:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3124:4003" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3249:3276" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3807" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3463:3964" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="3522:3758" ph="..." />
+            <marker date="1473980979613" expanded="true" signature="4690:4724" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="Copyright.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

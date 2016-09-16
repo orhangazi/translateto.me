@@ -6,6 +6,8 @@
  * Time: 16:39
  */
 include "baglan.php";
+
+//çeviri yapılması için açılan div e verileri gönderir
 $orijinal_metin_id = $_GET["orijinal_metin_id"];
 $orijinal_metin_id = mysqli_real_escape_string($baglan,$orijinal_metin_id);
 if (!empty(is_numeric($orijinal_metin_id))){
@@ -73,8 +75,9 @@ if (!empty(is_numeric($orijinal_metin_id))){
     }
 }
 
-$kaydedilsin_mi = $_POST['kaydedilsin_mi'];
-if ($kaydedilsin_mi){
+//çeviriyi kaydeder
+$ceviri_kaydedilsin_mi = $_POST['ceviri_kaydedilsin_mi'];
+if ($ceviri_kaydedilsin_mi){
     $orijinal_metin_id = $_POST['orijinal_metin_id'];
     $cevrilecek_dil_id = $_POST['cevrilecek_dil_id'];
     $cevirmen_notu = mysqli_real_escape_string($baglan,$_POST['cevirmen_notu']);
@@ -84,29 +87,28 @@ if ($kaydedilsin_mi){
     $kayitli_mi_sql = mysqli_query($baglan,"select id from cevrilmis_metinler where orijinal_metin_id=$orijinal_metin_id");
     if (mysqli_num_rows($kayitli_mi_sql)>0){
         $guncelle_sql = mysqli_query($baglan,"update cevrilmis_metinler set cevrilmis_metin='$cevrilmis_metin' where orijinal_metin_id=$orijinal_metin_id");
-        $hata = ($guncelle_sql)?"false":"true";
+        $hata = ($guncelle_sql)?false:true;
         $mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
     }
     else{
         $ceviriyi_kaydet_sql = mysqli_query($baglan,"insert into cevrilmis_metinler(orijinal_metin_id,cevrilmis_metin,dil_id) values('$orijinal_metin_id','$cevrilmis_metin','$cevrilecek_dil_id')");
-        $hata = ($ceviriyi_kaydet_sql)?"false":"true";
+        $hata = ($ceviriyi_kaydet_sql)?false:true;
         $mesaj = ($ceviriyi_kaydet_sql)?"Çeviri başarıyla kaydedildi":"Çeviri kaydedilemedi. Tekrar deneyin";
     }
 
     echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
 }
 
-
+//yorumları gösterir
 $yorumlari_goster = $_POST['yorumlari_goster'];
 if ($yorumlari_goster){
     $orijinal_metin_id = $_POST['orijinal_metin_id'];
     $orijinal_metin_id = mysqli_real_escape_string($baglan,$orijinal_metin_id);
 
-    $kayitli_mi_sql = mysqli_query($baglan,"select * from yorumlar where orijinal_metin_id=$orijinal_metin_id");
-    if (mysqli_num_rows($kayitli_mi_sql)>0){
-        $yorumlari_getir_sql = mysqli_query($baglan,"select * from yorumlar,uyeler where orijinal_metin_id=$orijinal_metin_id and yorumlar.cevirmen_id = uyeler.id");
-        $hata = ($yorumlari_getir_sql)?"false":"true";
-
+    //$kayitli_mi_sql = mysqli_query($baglan,"select * from yorumlar where orijinal_metin_id=$orijinal_metin_id");
+    $yorumlari_getir_sql = mysqli_query($baglan,"select * from yorumlar,uyeler where orijinal_metin_id=$orijinal_metin_id and yorumlar.yorum_sahibi_id = uyeler.id order by yorumlar.id asc");
+    if (mysqli_num_rows($yorumlari_getir_sql)>0){
+        $hata = ($yorumlari_getir_sql)?false:true;
         $yorumlar_html = "";
         while ($yorumlar=mysqli_fetch_object($yorumlari_getir_sql)){
             $yorum = $yorumlar->yorum;
@@ -129,5 +131,89 @@ if ($yorumlari_goster){
     }
 
     echo json_encode($mesaj);
+}
+
+
+//yorum kaydı yapar
+$yorum_kaydedilsin_mi = $_POST['yorum_kaydedilsin_mi'];
+if ($yorum_kaydedilsin_mi){
+    $orijinal_metin_id = $_POST['orijinal_metin_id'];
+    $yorum = mysqli_real_escape_string($baglan,trim($_POST['yorum']));
+    $yorum_sahibi_id = $_POST['uye_id'];
+    if(!empty($yorum)){
+        $yorumu_kaydet_sql = mysqli_query($baglan,"insert into yorumlar(yorum_sahibi_id,yorum,orijinal_metin_id) values('$yorum_sahibi_id','$yorum','$orijinal_metin_id')");
+        $hata = ($yorumu_kaydet_sql)?false:true;
+        $mesaj = ($yorumu_kaydet_sql)?"Yorum başarıyla başarıyla kaydedildi":"Çeviri yorum kaydedilemedi. Tekrar deneyin";
+    }
+    else{
+        $hata = true;
+        $mesaj = "Boş yorum kaydedilemez";
+    }
+
+    echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
+}
+
+//üye kaydı yapar
+$uye_kaydi_yapilsin_mi = $_GET['kayit-yap'];
+if ($uye_kaydi_yapilsin_mi){
+    $adi_soyadi = trim($_GET['adi-soyadi']);
+    $eposta = trim($_GET['eposta']);
+    $sifre = $_GET['sifre'];
+
+    $options = [
+        'cost' => 12
+    ];
+    $sifre = password_hash($sifre, PASSWORD_BCRYPT, $options);
+
+    if(!empty($adi_soyadi) && !empty($eposta) && !empty($sifre)){
+        $uyeyi_kaydet_sql = mysqli_query($baglan,"insert into uyeler(eposta,adi_soyadi,sifre) values('$eposta','$adi_soyadi','$sifre')");
+        $hata = ($uyeyi_kaydet_sql)?false:true;
+        if ($uyeyi_kaydet_sql) {
+            $_SESSION["eposta"] = $eposta;
+            $mesaj = "<script>location.reload();</script><strong>Hoşgeldiniz.</strong>";
+        } else {
+            $mesaj = "Kaydınız bir nedenden dolayı olmadı. Tekrar deneyiniz.";
+        }
+    }
+    else{
+        $hata = true;
+        $mesaj = "3 alanı da doldurmalısınız";
+    }
+
+    //$mesaj = "$adi_soyadi - $eposta - $sifre <br> ".!empty($adi_soyadi).!empty($eposta)."";
+    echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
+}
+
+//giriş yaptırır
+$giris_yapilsin_mi = $_GET['giris-yap'];
+if ($giris_yapilsin_mi){
+    $eposta = trim($_GET['eposta']);
+    $sifre = $_GET['sifre'];
+
+    if(!empty($eposta) && !empty($sifre)){
+        $vt_sifre_sql = mysqli_query($baglan,"select eposta,sifre from uyeler where eposta='$eposta' limit 1");
+        $hata = ($vt_sifre_sql)?false:true;
+
+        if (mysqli_num_rows($vt_sifre_sql)>0) {
+            $vt_sifre_nesne = mysqli_fetch_object($vt_sifre_sql);
+            $vt_sifre = $vt_sifre_nesne->sifre;
+            $sifre_uyusuyor_mu = password_verify($sifre,$vt_sifre);
+            if($sifre_uyusuyor_mu){
+                $_SESSION["eposta"] = $eposta;
+                $mesaj = "<script>location.reload();</script><strong>Hoşgeldiniz.</strong>";
+            }
+            else{
+                $mesaj = "<strong>Epostanız ya da şifreniz uyuşmuyor. Gözden geçirip tekrar giriş yapın</strong>";
+            }
+        } else {
+            $mesaj = "Bu epostayı kullanan bir kullanıcı yok. Tekrar kontrol edin veya bu epostayla kaydolun.";
+        }
+    }
+    else{
+        $hata = true;
+        $mesaj = "2 alanı da doldurmalısınız";
+    }
+
+    echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
 }
 ?>
