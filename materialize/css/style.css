@@ -20,7 +20,7 @@ h6{
 
 .kart{
     /*ikili sütunlar halinde*/
-    width: 483px !important;
+    /*width: 483px !important*/;
     /*üçlü sütunlar halinde*/
     /*width: 322px !important;*/
     height: 181px !important;
@@ -64,7 +64,7 @@ h6{
     margin-left: 20px;
 }
 
-.ceviri-kapsayici,.giris-kayit-divi{
+.ceviri-kapsayici,.giris-kayit-divi,.cevrilecek-metin-ekleme-divi{
     display: none;
     position: fixed;
     top: 0;
@@ -82,14 +82,23 @@ h6{
     background-color: #ffe0b2;
 }
 
-.orijinal-metin-divi{
+.orijinal-metin-divi,.cevrilecek-metin-divi{
     background-color: #ffe0b2;
     border-right:5px dashed teal;
 }
 
-.cevrilen-metin{
+.cevrilen-metin,.cevrilecek-metin-divi{
     height: 100% !important;
     overflow-y: auto !important;
+}
+
+.cevrilecek-metin-divi{
+    float: none !important;
+    margin: 0 auto;
+    border: 5px dashed teal;
+    border-width: 0 5px 0 5px;
+    background-color: #ffe0b2;
+    position: relative;
 }
 
 .giris-kayit-divi-form{
@@ -131,7 +140,7 @@ h6{
     position: relative;
 }
 
-.kaydet{
+.kaydet,.cevrilecek-metni-kaydet {
     bottom: 20px;
     right: 20px;
     position: absolute;
@@ -172,4 +181,14 @@ h6{
 
 .kayit-durumu,.giris-durumu{
     display: block;
+}
+
+.yeni-cevrilecek-metin-ekle{
+    position: fixed;
+    bottom: 0px;
+    margin: 20px;
+}
+
+#cevrilecek-metin-formu{
+    height: 100%;
 }

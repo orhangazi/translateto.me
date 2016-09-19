@@ -17,6 +17,7 @@ if (!empty(is_numeric($orijinal_metin_id))){
     if (mysqli_num_rows($metinler_sql)>0){
         $metinler = mysqli_fetch_object($metinler_sql);
         $orijinal_metin = $metinler->orijinal_metin;
+		$orijinal_kelime_sayisi = count(explode(' ',$orijinal_metin));
         $baslik = $metinler->baslik;
         $metin_sahibi_id = $metinler->metin_sahibi_id; //çevirten id
         $metin_sahibi_notu = $metinler->metin_sahibi_notu; //çevirten notu
@@ -31,6 +32,7 @@ if (!empty(is_numeric($orijinal_metin_id))){
 
         $icerik = ["orijinal_metin"=>$orijinal_metin,
         "baslik"=>$baslik,
+        "orijinal_kelime_sayisi"=>$orijinal_kelime_sayisi,
         "metin_sahibi_id"=>$metin_sahibi_id,
         "metin_sahibi_notu"=>$metin_sahibi_notu,
         "orijinal_dil_id"=>$orijinal_dil_id,
@@ -78,20 +80,37 @@ if (!empty(is_numeric($orijinal_metin_id))){
 //çeviriyi kaydeder
 $ceviri_kaydedilsin_mi = $_POST['ceviri_kaydedilsin_mi'];
 if ($ceviri_kaydedilsin_mi){
+	$uye_id = $_SESSION['id'];
     $orijinal_metin_id = $_POST['orijinal_metin_id'];
     $cevrilecek_dil_id = $_POST['cevrilecek_dil_id'];
     $cevirmen_notu = mysqli_real_escape_string($baglan,$_POST['cevirmen_notu']);
     $cevrilmis_metin = mysqli_real_escape_string($baglan,$_POST['cevrilmis_metin']);
-    $uye_id = $_POST['uye_id'];
+
+	$orijinal_kelime_sayisi = $_POST['orijinal_kelime_sayisi'];
+	$cevrilmis_kelime_sayisi = count(explode(' ',$cevrilmis_metin));
+	//yüzdeye göre
+	$ceviri_miktari = ($cevrilmis_kelime_sayisi*100)/$orijinal_kelime_sayisi;
 
     $kayitli_mi_sql = mysqli_query($baglan,"select id from cevrilmis_metinler where orijinal_metin_id=$orijinal_metin_id");
     if (mysqli_num_rows($kayitli_mi_sql)>0){
+    	$cevrilmis_metin_id_nesne = mysqli_fetch_object($kayitli_mi_sql);
+		$cevrilmis_metin_id = $cevrilmis_metin_id_nesne->id;
         $guncelle_sql = mysqli_query($baglan,"update cevrilmis_metinler set cevrilmis_metin='$cevrilmis_metin' where orijinal_metin_id=$orijinal_metin_id");
-        $hata = ($guncelle_sql)?false:true;
-        $mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
+		$hata = ($guncelle_sql)?false:true;
+		$ayni_kisi_mi_sql = mysqli_query($baglan,"select id from ceviriler where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
+		if(mysqli_num_rows($ayni_kisi_mi_sql)>0){
+			$ceviriler_vt_guncelle = mysqli_query($baglan,"update ceviriler set ceviri_miktari=$ceviri_miktari where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
+			$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
+		}
+		else{
+			$ceviriler_vt_ekle = mysqli_query($baglan,"insert into ceviriler(ceviren_id, cevrilmis_metin_id, ceviri_miktari) values('$uye_id','$cevrilmis_metin_id','$ceviri_miktari')");
+			$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
+		}
     }
     else{
         $ceviriyi_kaydet_sql = mysqli_query($baglan,"insert into cevrilmis_metinler(orijinal_metin_id,cevrilmis_metin,dil_id) values('$orijinal_metin_id','$cevrilmis_metin','$cevrilecek_dil_id')");
+		$son_cevrilmis_metin_id = mysqli_insert_id($baglan);
+		$ceviriler_vt_kaydet = mysqli_query($baglan,"insert into ceviriler(cevrilmis_metin_id,ceviren_id,ceviri_miktari) values('$son_cevrilmis_metin_id','$uye_id','$ceviri_miktari')");
         $hata = ($ceviriyi_kaydet_sql)?false:true;
         $mesaj = ($ceviriyi_kaydet_sql)?"Çeviri başarıyla kaydedildi":"Çeviri kaydedilemedi. Tekrar deneyin";
     }
@@ -170,6 +189,9 @@ if ($uye_kaydi_yapilsin_mi){
         $hata = ($uyeyi_kaydet_sql)?false:true;
         if ($uyeyi_kaydet_sql) {
             $_SESSION["eposta"] = $eposta;
+			$_SESSION["id"] = mysqli_insert_id($baglan);
+			$_SESSION["adi_soyadi"] = $adi_soyadi;
+			$_SESSION["profil_resmi"] = "resimler/kullanici_resmi_50x50.png";
             $mesaj = "<script>location.reload();</script><strong>Hoşgeldiniz.</strong>";
         } else {
             $mesaj = "Kaydınız bir nedenden dolayı olmadı. Tekrar deneyiniz.";
@@ -180,7 +202,6 @@ if ($uye_kaydi_yapilsin_mi){
         $mesaj = "3 alanı da doldurmalısınız";
     }
 
-    //$mesaj = "$adi_soyadi - $eposta - $sifre <br> ".!empty($adi_soyadi).!empty($eposta)."";
     echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
 }
 
@@ -191,15 +212,18 @@ if ($giris_yapilsin_mi){
     $sifre = $_GET['sifre'];
 
     if(!empty($eposta) && !empty($sifre)){
-        $vt_sifre_sql = mysqli_query($baglan,"select eposta,sifre from uyeler where eposta='$eposta' limit 1");
-        $hata = ($vt_sifre_sql)?false:true;
+        $uye_bilgileri_sql = mysqli_query($baglan,"select * from uyeler where eposta='$eposta' limit 1");
+        $hata = ($uye_bilgileri_sql)?false:true;
 
-        if (mysqli_num_rows($vt_sifre_sql)>0) {
-            $vt_sifre_nesne = mysqli_fetch_object($vt_sifre_sql);
-            $vt_sifre = $vt_sifre_nesne->sifre;
+        if (mysqli_num_rows($uye_bilgileri_sql)>0) {
+            $uye_bilgileri = mysqli_fetch_object($uye_bilgileri_sql);
+            $vt_sifre = $uye_bilgileri->sifre;
             $sifre_uyusuyor_mu = password_verify($sifre,$vt_sifre);
             if($sifre_uyusuyor_mu){
                 $_SESSION["eposta"] = $eposta;
+                $_SESSION["id"] = $uye_bilgileri->id;
+                $_SESSION["adi_soyadi"] = $uye_bilgileri->adi_soyadi;
+                $_SESSION["profil_resmi"] = $uye_bilgileri->profil_resmi==""?"resimler/kullanici_resmi_50x50.png":"$uye_bilgileri->profil_resmi";
                 $mesaj = "<script>location.reload();</script><strong>Hoşgeldiniz.</strong>";
             }
             else{
@@ -215,5 +239,105 @@ if ($giris_yapilsin_mi){
     }
 
     echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
+}
+
+//çevrilecek metni kaydeder
+$cevrilecek_metin_kaydedilsin_mi=$_POST["cevrilecek-metni-kaydet"];
+if($cevrilecek_metin_kaydedilsin_mi){
+	$metin_basligi = mysqli_real_escape_string($baglan,$_POST["metin-basligi"]);
+	$cevrilen_metin_notu = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin-notu"]);
+	$cevrilen_metin = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin"]);
+	$metin_sahibi_id = mysqli_real_escape_string($baglan,$_POST["metin-sahibi-id"]);
+	$orijinal_dil_id = mysqli_real_escape_string($baglan,$_POST["orijinal-dil"]);
+	$cevrilecek_dil_id = mysqli_real_escape_string($baglan,$_POST["cevrilecek-dil"]);
+
+	if(!empty($metin_basligi) && !empty($cevrilen_metin) && !empty($orijinal_dil_id) && !empty($cevrilecek_dil_id)){
+		$cevrilecek_metni_kaydet_sql = mysqli_query($baglan,"insert into orijinal_metinler(baslik,metin_sahibi_notu,orijinal_metin,metin_sahibi_id,orijinal_dil_id,cevrilecek_dil_id) values('$metin_basligi','$cevrilen_metin_notu','$cevrilen_metin','$metin_sahibi_id','$orijinal_dil_id','$cevrilecek_dil_id')");
+
+		$hata = $cevrilecek_metni_kaydet_sql?false:true;
+		$mesaj = $cevrilecek_metni_kaydet_sql?"Metin kaydedildi. Çevirinin herhangi bir aşamasındayken de görebilirsiniz.":"Metin kaydedilemedi. Tekrar deneyin.";
+	}
+	else{
+		$hata = true;
+		$mesaj = "Çevirmenlere notun dışında diğer tüm bilgileri girmelisin";
+	}
+
+	echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
+}
+
+//kullanıcının çevirdiği metinleri gösterir
+$cevirdigim_metinler=$_GET['cevirdigim_metinler'];
+if($cevirdigim_metinler){
+	//$uye_id = $_SESSION[''];
+	$html="<blockquote><h4>Çevirdiğim Metinler</h4></blockquote>";
+	$orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id order by orijinal_metinler.id desc;");
+
+	while($orijinal_metinler = mysqli_fetch_object($orijinal_metinler_sql)){
+		$orijinal_metin_id = $orijinal_metinler->orijinal_metin_id;
+		$orijinal_metin = $orijinal_metinler->orijinal_metin;
+		$baslik = $orijinal_metinler->baslik;
+		$metin_sahibi_id = $orijinal_metinler->metin_sahibi_id;
+		$metin_sahibi_notu = $orijinal_metinler->metin_sahibi_notu;
+		$guncellenme_tarihi = $orijinal_metinler->guncellenme_tarihi;
+		$adi_soyadi_kart = $orijinal_metinler->adi_soyadi;
+		$orijinal_dil_id = $orijinal_metinler->orijinal_dil_id;
+		$cevrilecek_dil_id = $orijinal_metinler->cevrilecek_dil_id;
+		$profil_resmi = $orijinal_metinler->profil_resmi != ""?"$orijinal_metinler->profil_resmi":"resimler/kullanici_resmi_50x50.png";
+		$orijinal_metin = substr($orijinal_metin,0,150);
+
+		$html.="<div class='col s4 kart'>
+					<div class='card-panel hoverable teal lighten-5'>
+						<h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
+						<span class='kart-aciklama blue-text text-darken-2'>$orijinal_metin</span>
+						<div class='kart-alt'>
+							<div class='chip'>
+								<img src='$profil_resmi' alt='Contact Person'>
+								<a class='' href='javascript:void(0)'>$adi_soyadi_kart</a>
+							</div>
+							<a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir waves-effect waves-light btn right'>Çevir</a>
+						</div>
+					</div>
+				</div>";
+	}
+
+	echo json_encode(["mesaj"=>$html]);
+}
+
+//kullanıcının çevirdiği metinler
+$cevirttigim_metinler = $_GET['cevirttigim_metinler'];
+if($cevirttigim_metinler){
+	$uye_id = $_SESSION["id"];
+	$html="<blockquote><h4>Çevirttiğim Metinler</h4></blockquote>";
+	$orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id and orijinal_metinler.metin_sahibi_id=$uye_id order by orijinal_metinler.id desc;");
+
+	while($orijinal_metinler = mysqli_fetch_object($orijinal_metinler_sql)){
+		$orijinal_metin_id = $orijinal_metinler->orijinal_metin_id;
+		$orijinal_metin = $orijinal_metinler->orijinal_metin;
+		$baslik = $orijinal_metinler->baslik;
+		$metin_sahibi_id = $orijinal_metinler->metin_sahibi_id;
+		$metin_sahibi_notu = $orijinal_metinler->metin_sahibi_notu;
+		$guncellenme_tarihi = $orijinal_metinler->guncellenme_tarihi;
+		$adi_soyadi_kart = $orijinal_metinler->adi_soyadi;
+		$orijinal_dil_id = $orijinal_metinler->orijinal_dil_id;
+		$cevrilecek_dil_id = $orijinal_metinler->cevrilecek_dil_id;
+		$profil_resmi = $orijinal_metinler->profil_resmi != ""?"$orijinal_metinler->profil_resmi":"resimler/kullanici_resmi_50x50.png";
+		$orijinal_metin = substr($orijinal_metin,0,150);
+
+		$html.="<div class='col s4 kart'>
+                                <div class='card-panel hoverable teal lighten-5'>
+                                    <h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
+                                    <span class='kart-aciklama blue-text text-darken-2'>$orijinal_metin</span>
+                                    <div class='kart-alt'>
+                                        <div class='chip'>
+                                            <img src='$profil_resmi' alt='Contact Person'>
+                                            <a class='' href='javascript:void(0)'>$adi_soyadi_kart</a>
+                                        </div>
+                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir waves-effect waves-light btn right'>Çevir</a>
+                                    </div>
+                                </div>
+                            </div>";
+	}
+
+	echo json_encode(["mesaj"=>$html]);
 }
 ?>

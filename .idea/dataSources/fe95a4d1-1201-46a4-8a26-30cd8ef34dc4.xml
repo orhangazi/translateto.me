@@ -14,173 +14,171 @@
     <schema id="9" name="phpmyadmin"/>
     <schema id="10" name="test"/>
     <schema id="11" name="webauth"/>
-    <table id="12" parent="1" name="cevirenler">
-      <comment>çeviri yapanlar. yaptıkları çeviriler ve miktarı</comment>
-    </table>
-    <table id="13" parent="1" name="cevrilmis_metinler">
+    <table id="12" parent="1" name="cevrilmis_metinler">
       <comment>çevrilmiş metin</comment>
     </table>
-    <table id="14" parent="1" name="orijinal_metinler">
+    <table id="13" parent="1" name="orijinal_metinler">
       <comment>orijinal metinleirn bulunduğu tablo</comment>
     </table>
-    <table id="15" parent="1" name="uyeler"/>
-    <table id="16" parent="1" name="diller">
+    <table id="14" parent="1" name="uyeler"/>
+    <table id="15" parent="1" name="diller">
       <comment>dillerin bulunduğu tablo</comment>
     </table>
-    <table id="17" parent="1" name="yorumlar">
+    <table id="16" parent="1" name="yorumlar">
       <comment>yorumlar</comment>
+    </table>
+    <table id="17" parent="1" name="ceviriler">
+      <comment>çeviri yapanlar. yaptıkları çeviriler ve miktarı</comment>
     </table>
     <column id="18" parent="12" name="id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="19" parent="12" name="ceviren_id">
-      <comment>çevirenin uye_id si</comment>
+    <column id="19" parent="12" name="orijinal_metin_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="20" parent="12" name="cevrilmis_metin_id">
-      <mandatory>1</mandatory>
-      <data-type>int(10) unsigned|0</data-type>
-    </column>
-    <column id="21" parent="12" name="ceviri_miktari">
-      <comment>kelime cinsinden çeviri miktarı</comment>
-      <mandatory>1</mandatory>
-      <data-type>int(10) unsigned|0</data-type>
-    </column>
-    <column id="22" parent="12" name="ceviri_tarihi">
-      <mandatory>1</mandatory>
-      <data-type>timestamp|0</data-type>
-      <default-expression>CURRENT_TIMESTAMP</default-expression>
-    </column>
-    <key id="23" parent="12" name="PRIMARY">
-      <columns>id</columns>
-      <primary>1</primary>
-    </key>
-    <column id="24" parent="13" name="id">
-      <mandatory>1</mandatory>
-      <data-type>int(10) unsigned|0</data-type>
-      <sequence-identity>1</sequence-identity>
-    </column>
-    <column id="25" parent="13" name="orijinal_metin_id">
-      <mandatory>1</mandatory>
-      <data-type>int(10) unsigned|0</data-type>
-    </column>
-    <column id="26" parent="13" name="cevrilmis_metin">
+    <column id="20" parent="12" name="cevrilmis_metin">
       <mandatory>1</mandatory>
       <data-type>longtext|0</data-type>
     </column>
-    <column id="27" parent="13" name="dil_id">
+    <column id="21" parent="12" name="dil_id">
       <comment>çevrilecek dil</comment>
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="28" parent="13" name="onayli_mi">
+    <column id="22" parent="12" name="onayli_mi">
       <mandatory>1</mandatory>
       <data-type>tinyint(1) unsigned|0</data-type>
       <default-expression>&apos;0&apos;</default-expression>
     </column>
-    <column id="29" parent="13" name="guncellenme_tarihi">
+    <column id="23" parent="12" name="guncellenme_tarihi">
       <comment>çeviriyi güncelleme tarihi</comment>
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <column id="30" parent="13" name="baslama_tarihi">
+    <column id="24" parent="12" name="baslama_tarihi">
       <comment>çeviriye başlama tarihi</comment>
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <key id="31" parent="13" name="PRIMARY">
+    <key id="25" parent="12" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="32" parent="14" name="id">
+    <column id="26" parent="13" name="id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="33" parent="14" name="baslik">
+    <column id="27" parent="13" name="baslik">
       <comment>orijinal metin başlığı</comment>
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="34" parent="14" name="orijinal_metin">
+    <column id="28" parent="13" name="orijinal_metin">
       <mandatory>1</mandatory>
       <data-type>longtext|0</data-type>
     </column>
-    <column id="35" parent="14" name="metin_sahibi_id">
+    <column id="29" parent="13" name="metin_sahibi_id">
       <comment>metnin sahibi</comment>
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="36" parent="14" name="metin_sahibi_notu">
+    <column id="30" parent="13" name="metin_sahibi_notu">
       <comment>metin sahibinin notu</comment>
       <data-type>text|0</data-type>
     </column>
-    <column id="37" parent="14" name="orijinal_dil_id">
+    <column id="31" parent="13" name="orijinal_dil_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="38" parent="14" name="cevrilecek_dil_id">
+    <column id="32" parent="13" name="cevrilecek_dil_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="39" parent="14" name="kayit_tarihi">
+    <column id="33" parent="13" name="kayit_tarihi">
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <column id="40" parent="14" name="guncelleme_tarihi">
+    <column id="34" parent="13" name="guncelleme_tarihi">
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <key id="41" parent="14" name="PRIMARY">
+    <key id="35" parent="13" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="42" parent="15" name="id">
+    <column id="36" parent="14" name="id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="43" parent="15" name="eposta">
+    <column id="37" parent="14" name="eposta">
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="44" parent="15" name="sifre">
+    <column id="38" parent="14" name="sifre">
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="45" parent="15" name="adi_soyadi">
+    <column id="39" parent="14" name="adi_soyadi">
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="46" parent="15" name="profil_resmi">
+    <column id="40" parent="14" name="profil_resmi">
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="47" parent="15" name="kayit_tarihi">
+    <column id="41" parent="14" name="kayit_tarihi">
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <key id="48" parent="15" name="PRIMARY">
+    <key id="42" parent="14" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="49" parent="16" name="id">
+    <column id="43" parent="15" name="id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="50" parent="16" name="dil">
+    <column id="44" parent="15" name="dil">
       <comment>dil adı</comment>
       <mandatory>1</mandatory>
       <data-type>tinytext|0</data-type>
+    </column>
+    <key id="45" parent="15" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="46" parent="16" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="47" parent="16" name="orijinal_metin_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+    </column>
+    <column id="48" parent="16" name="yorum_sahibi_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+    </column>
+    <column id="49" parent="16" name="yorum">
+      <mandatory>1</mandatory>
+      <data-type>tinytext|0</data-type>
+    </column>
+    <column id="50" parent="16" name="kayit_tarihi">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
     <key id="51" parent="16" name="PRIMARY">
       <columns>id</columns>
@@ -191,19 +189,21 @@
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="53" parent="17" name="orijinal_metin_id">
+    <column id="53" parent="17" name="ceviren_id">
+      <comment>çevirenin uye_id si</comment>
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="54" parent="17" name="yorum_sahibi_id">
+    <column id="54" parent="17" name="cevrilmis_metin_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="55" parent="17" name="yorum">
+    <column id="55" parent="17" name="ceviri_miktari">
+      <comment>kelime cinsinden çeviri miktarı</comment>
       <mandatory>1</mandatory>
-      <data-type>tinytext|0</data-type>
+      <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="56" parent="17" name="kayit_tarihi">
+    <column id="56" parent="17" name="ceviri_tarihi">
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>

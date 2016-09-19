@@ -10,6 +10,7 @@ include "php/baglan.php";
 $cikis = $_GET['cikis'];
 if(isset($cikis)){
     session_destroy();
+	header("Location:index.php");
 }
 
 $eposta = $_SESSION["eposta"];
@@ -22,6 +23,16 @@ if($eposta!=""){
     $profil_resmi = $kullanici_bilgileri->profil_resmi;
     $profil_resmi = $profil_resmi!=""?"$profil_resmi":"resimler/kullanici_resmi_50x50.png";
 	$giris_yapilmis_mi = true;
+
+	//yeni metin ekleme katmanında select option nesnesi olarak kullanmak için
+	$diller_select= "";
+	$diller_sql = mysqli_query($baglan,"select * from diller");
+	while($dil_nesne = mysqli_fetch_object($diller_sql)){
+		$dil_id = $dil_nesne->id;
+		$dil = $dil_nesne->dil;
+
+		$diller_select .= "<option value='$dil_id'>$dil</option>";
+	}
 }
 else{
 	$giris_yapilmis_mi = false;
@@ -43,7 +54,19 @@ else{
 <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
-            <li><a class="giris-kayit-divini-ac">Giriş Yap ya da Kayıt Ol</a></li>
+			<li><a class="gorunumu-degistir tooltipped" data-tooltip="3lü sütun görünümü"><i class="small material-icons">view_week</i></a></li>
+            <li>
+				<?= $giris_yapilmis_mi == true?"<a>$adi_soyadi</a>":"<a class='giris-kayit-divini-ac'>Giriş Yap ya da Kayıt Ol</a>"; ?>
+			</li>
+			<li>
+				<a class='dropdown-button' data-constrainwidth="false" data-beloworigin="true" data-alignment="right" data-activates="menu" href="#" class="menu"><i class="dropdown-button material-icons small">reorder</i></a>
+				<!-- Dropdown Structure -->
+				<ul id='menu' class='dropdown-content'>
+					<li><a href="php/islemler.php?cevirdigim_metinler=true" class="cevirdigim-metinler">Çevirdiklerim</a></li>
+					<li><a href="php/islemler.php?cevirttigim_metinler=true" class="cevirttigim-metinler">Çevirttiklerim</a></li>
+					<li><a href="index.php?cikis=true">Çıkış</a></li>
+				</ul>
+			</li>
         </ul>
     </div>
 </nav>
@@ -52,31 +75,32 @@ else{
         <div class="row">
             <?
                 $html="";
-                $orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id;");
+                $orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id order by orijinal_metinler.id desc;");
 
                 while($orijinal_metinler = mysqli_fetch_object($orijinal_metinler_sql)){
                     $orijinal_metin_id = $orijinal_metinler->orijinal_metin_id;
                     $orijinal_metin = $orijinal_metinler->orijinal_metin;
+					$orijinal_kelime_sayisi = count(explode(' ',$orijinal_metin));
                     $baslik = $orijinal_metinler->baslik;
                     $metin_sahibi_id = $orijinal_metinler->metin_sahibi_id;
                     $metin_sahibi_notu = $orijinal_metinler->metin_sahibi_notu;
                     $guncellenme_tarihi = $orijinal_metinler->guncellenme_tarihi;
-                    $adi_soyadi = $orijinal_metinler->adi_soyadi;
+                    $adi_soyadi_kart = $orijinal_metinler->adi_soyadi;
                     $orijinal_dil_id = $orijinal_metinler->orijinal_dil_id;
                     $cevrilecek_dil_id = $orijinal_metinler->cevrilecek_dil_id;
                     $profil_resmi = $orijinal_metinler->profil_resmi != ""?"$orijinal_metinler->profil_resmi":"resimler/kullanici_resmi_50x50.png";
                     $orijinal_metin = substr($orijinal_metin,0,150);
 
-                    $html.="<div class='col s4 kart'>
+                    $html.="<div class='col s4 kart' style='width:483px'>
                                 <div class='card-panel hoverable teal lighten-5'>
                                     <h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
                                     <span class='kart-aciklama blue-text text-darken-2'>$orijinal_metin</span>
                                     <div class='kart-alt'>
                                         <div class='chip'>
                                             <img src='$profil_resmi' alt='Contact Person'>
-                                            <a class='' href='javascript:void(0)'>$adi_soyadi</a>
+                                            <a class='' href='javascript:void(0)'>$adi_soyadi_kart</a>
                                         </div>
-                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir waves-effect waves-light btn right'>Çevir</a>
+                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id&orijinal_kelime_sayisi=$orijinal_kelime_sayisi' class='cevir waves-effect waves-light btn right'>Çevir</a>
                                     </div>
                                 </div>
                             </div>";
@@ -116,7 +140,7 @@ else{
     </div>
     <div class="footer-copyright">
         <div class="container" style="font-weight: bold; color: #000;">
-            <a class="orange-text text-lighten-3" style="color: #000 !important;" href="http://materializecss.com">translateto.me</a> Gazi Yazılım ürünüdür.
+            <a class="orange-text text-lighten-3" style="color: #000 !important;" href="index.php">translateto.me</a> Gazi Yazılım ürünüdür.
         </div>
     </div>
 </footer>
@@ -141,6 +165,46 @@ else{
     <i class="material-icons yorumlari-gor tooltipped" data-position="left" data-delay="50" data-tooltip="Yorumları gör">comment</i>
     <input type="hidden" id="orijinal-metin-id">
     <input type="hidden" id="cevrilecek-dil-id">
+    <input type="hidden" id="orijinal-kelime-sayisi">
+</div>
+<div class="cevrilecek-metin-ekleme-divi row">
+	<form id="cevrilecek-metin-formu">
+		<div class="cevrilecek-metin-divi col s7">
+			<h5>Çevrilecek metin</h5>
+			<div class="input-field col s12">
+				<input id="baslik" type="text" name="metin-basligi" class="validate">
+				<label for="baslik" class="blue-text">Metin başlığı</label>
+			</div>
+			<div class="input-field col s12">
+				<textarea id="cevrilen-metin-notu" name="cevrilen-metin-notu" class="materialize-textarea"></textarea>
+				<label for="cevrilen-metin-notu" class="blue-text">Çevirmenlere iletmek istediğin notun</label>
+			</div>
+			<div class="input-field col s12">
+				<textarea id="cevrilen-metin" name="cevrilen-metin" class="materialize-textarea"></textarea>
+				<label for="cevrilen-metin" class="blue-text">Çevrilmesini istediğin metin</label>
+			</div>
+            <div class="input-field col s3">
+                <select name="orijinal-dil">
+                    <option value="" disabled selected>Metnin orijinal dili</option>
+                    <?= $diller_select ?>
+                </select>
+                <label class="blue-text">Metnin orijinal dilini seçin</label>
+            </div>
+            <div class="input-field col s3">
+                <select name="cevrilecek-dil">
+                    <option value="" disabled selected>Metnin çevrileceği dil</option>
+                    <?= $diller_select ?>
+                </select>
+                <label class="blue-text">Metin çevrileceği dili seçin</label>
+            </div>
+		</div>
+		<input type="hidden" name="cevrilecek-metni-kaydet" value="true">
+	<button class="btn-floating btn-large waves-effect waves-light green cevrilecek-metni-kaydet tooltipped" data-position="top" data-delay="50" data-tooltip="Ctrl+S ile de kaydedebilirsin"><i class="material-icons">save</i></button>
+	</form>
+	<div class="ceviri-kapsayici-kapat tooltipped" data-position="left" data-delay="50" data-tooltip="Esc'ye basarak da kapatabilirsin">✖</div>
+	<i class="material-icons yorumlari-gor tooltipped" data-position="left" data-delay="50" data-tooltip="Yorumları gör">comment</i>
+	<input type="hidden" id="orijinal-metin-id">
+	<input type="hidden" id="cevrilecek-dil-id">
 </div>
 <div class="giris-kayit-divi row">
     <div class="giris-kayit-divi-form col s3">
@@ -202,6 +266,7 @@ else{
         </div>
     </div>
 </div>
+<a class="btn-floating btn-large waves-effect waves-light red tooltipped yeni-cevrilecek-metin-ekle" data-position="top" data-delay="50" data-tooltip="Çevirisini yaptırmak için bir metin ekle"><i class="material-icons">add</i></a>
 <input type="hidden" value="<? echo $uye_id ?>" id="uye-id">
 <input type="hidden" value="<? echo $adi_soyadi ?>" id="adi-soyadi">
 <input type="hidden" value="<? echo $profil_resmi ?>" id="profil-resmi">
