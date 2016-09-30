@@ -52,7 +52,7 @@ else{
 </head>
 <body>
 <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+    <div class="nav-wrapper container"><a id="logo-container" href="" class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
 			<li><a class="gorunumu-degistir tooltipped" data-tooltip="3lü sütun görünümü"><i class="small material-icons">view_week</i></a></li>
             <li>
@@ -64,6 +64,7 @@ else{
 				<ul id='menu' class='dropdown-content'>
 					<li><a href="php/islemler.php?cevirdigim_metinler=true" class="cevirdigim-metinler">Çevirdiklerim</a></li>
 					<li><a href="php/islemler.php?cevirttigim_metinler=true" class="cevirttigim-metinler">Çevirttiklerim</a></li>
+					<li><a href="php/ayarlar.php" class="ayarlar">Ayarlar</a></li>
 					<li><a href="index.php?cikis=true">Çıkış</a></li>
 				</ul>
 			</li>
@@ -71,7 +72,7 @@ else{
     </div>
 </nav>
 <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
+    <div class="container orta">
         <div class="row">
             <?
                 $html="";
@@ -93,6 +94,7 @@ else{
 
                     $html.="<div class='col s4 kart' style='width:483px'>
                                 <div class='card-panel hoverable teal lighten-5'>
+                                	<!--<div class='kart-ust'></div>-->
                                     <h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
                                     <span class='kart-aciklama blue-text text-darken-2'>$orijinal_metin</span>
                                     <div class='kart-alt'>
@@ -100,7 +102,11 @@ else{
                                             <img src='$profil_resmi' alt='Contact Person'>
                                             <a class='' href='javascript:void(0)'>$adi_soyadi_kart</a>
                                         </div>
-                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id&orijinal_kelime_sayisi=$orijinal_kelime_sayisi' class='cevir waves-effect waves-light btn right'>Çevir</a>
+                                        <div style='position: absolute; right: 0px; bottom: 0px;'>
+                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='tumunu-goster waves-effect waves-light btn'>Göster</a>
+                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id&orijinal_kelime_sayisi=$orijinal_kelime_sayisi' class='cevir waves-effect waves-light btn'>Çevir</a>
+										</div>
+                                        
                                     </div>
                                 </div>
                             </div>";
@@ -263,6 +269,18 @@ else{
         <div class="input-field yorum-input-field">
             <label for="yorum" class="yorum-label blue-text text-lighten-1">Yorumunu yaz</label>
             <textarea name="cevirmen-yorumu" class="materialize-textarea" id="yorum"></textarea>
+        </div>
+    </div>
+</div>
+<!-- Modal Structure -->
+<div id="metin-modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5 class="metin-modal-baslik">Metin Başlığı</h5>
+        <p class="metin-modal-ic">Orijinal metin içeriği</p>
+    </div>
+    <div class="modal-footer">
+        <div class="input-field yorum-input-field">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Kapat</a>
         </div>
     </div>
 </div>

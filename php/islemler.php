@@ -177,7 +177,7 @@ $uye_kaydi_yapilsin_mi = $_GET['kayit-yap'];
 if ($uye_kaydi_yapilsin_mi){
     $adi_soyadi = trim($_GET['adi-soyadi']);
     $eposta = trim($_GET['eposta']);
-    $sifre = $_GET['sifre'];
+    $sifre = trim($_GET['sifre']);
 
     $options = [
         'cost' => 12
@@ -209,7 +209,7 @@ if ($uye_kaydi_yapilsin_mi){
 $giris_yapilsin_mi = $_GET['giris-yap'];
 if ($giris_yapilsin_mi){
     $eposta = trim($_GET['eposta']);
-    $sifre = $_GET['sifre'];
+    $sifre = trim($_GET['sifre']);
 
     if(!empty($eposta) && !empty($sifre)){
         $uye_bilgileri_sql = mysqli_query($baglan,"select * from uyeler where eposta='$eposta' limit 1");
@@ -339,5 +339,106 @@ if($cevirttigim_metinler){
 	}
 
 	echo json_encode(["mesaj"=>$html]);
+}
+
+$bilgileri_guncelle = $_POST['bilgileri_guncelle'];
+if($bilgileri_guncelle){
+	$uye_id = $_SESSION['id'];
+	$form_adi = $_POST['form-adi'];//forma göre kayıt yapmak için hangi formda olduğumu bu şekilde buluyorum
+
+	if($form_adi=="kisisel-bilgileri-guncelleme-formu"){
+		$adi_soyadi = mysqli_real_escape_string($baglan,$_POST['adi-soyadi']);
+		$biyografi = mysqli_real_escape_string($baglan,$_POST['biyografi']);
+
+		if(!empty($adi_soyadi)){
+			$kisisel_bilgileri_guncelle_sql = mysqli_query($baglan,"update uyeler set adi_soyadi='$adi_soyadi', biyografi='$biyografi' where id=$uye_id");
+			if($kisisel_bilgileri_guncelle_sql){
+				$mesaj = "Kişisel bilgilerin başarıyla güncellendi";
+				$hata = false;
+			}else{
+				$mesaj= "Güncellemede sorun çıktı. Tekrar dene.";
+				$hata = true;
+			}
+		}
+		else{
+			$mesaj = "Adın boş olamaz";
+			$hata = true;
+		}
+		$veriler = ["hata"=>$hata, "mesaj"=>$mesaj];
+		echo json_encode($veriler);
+	}
+	else if($form_adi=="eposta-degistirme-formu"){
+		$eposta = mysqli_real_escape_string($baglan,$_POST['eposta']);
+
+		if(!filter_var($eposta,FILTER_VALIDATE_EMAIL)){
+			$veriler = ["hata"=>true, "mesaj"=>"Geçerli bir eposta giriniz"];
+			echo json_encode($veriler);
+			exit();
+		}
+
+		if(!empty($eposta)){
+			$epostayi_guncelle_sql = mysqli_query($baglan,"update uyeler set eposta='$eposta' where id=$uye_id");
+			if($epostayi_guncelle_sql){
+				$_SESSION['eposta'] = $eposta;
+				$mesaj = "Epostan başarıyla güncellendi";
+				$hata = false;
+			}else{
+				$mesaj= "Güncellemede sorun çıktı. Tekrar dene.";
+				$hata = true;
+			}
+		}
+		else{
+			$mesaj = "Epostan boş olamaz";
+			$hata = true;
+		}
+		$veriler = ["hata"=>$hata, "mesaj"=>$mesaj];
+		echo json_encode($veriler);
+	}
+	else if($form_adi=="sifre-degistirme-formu"){
+		$eski_sifre = mysqli_real_escape_string($baglan,$_POST['suanki-sifre']);
+		$yeni_sifre = mysqli_real_escape_string($baglan,$_POST['yeni-sifre']);
+		$yeni_sifre_2 = mysqli_real_escape_string($baglan,$_POST['yeni-sifre-2']);
+
+		if($yeni_sifre==$yeni_sifre_2){
+			if(!empty($eski_sifre) && !empty($yeni_sifre) && !empty($yeni_sifre_2)){
+				$options = [
+					'cost' => 12
+				];
+				$yeni_sifre = password_hash($yeni_sifre, PASSWORD_BCRYPT, $options);
+
+				$vt_sifre_sql = mysqli_query($baglan,"select sifre from uyeler where id=$uye_id limit 1");
+				$vt_sifre_nesne = mysqli_fetch_object($vt_sifre_sql);
+				$vt_sifre = $vt_sifre_nesne->sifre;
+
+				$sifre_uyusuyor_mu = password_verify($eski_sifre,$vt_sifre);
+				if($sifre_uyusuyor_mu){
+					$sifreyi_guncelle_sql = mysqli_query($baglan,"update uyeler set sifre='$yeni_sifre' where id=$uye_id");
+					if($sifreyi_guncelle_sql){
+						$mesaj = "Şifren başarıyla güncellendi";
+						$hata = false;
+					}else{
+						$mesaj = "Güncellemede sorun çıktı. Tekrar dene.";
+						$hata = true;
+					}
+				}
+				else{
+					$mesaj = "Eski şifreni yanlış girdin. Tekrar dene.";
+					$hata = true;
+				}
+			}
+			else{
+				$mesaj = "Şifreni değiştirebilmek için tüm alanları doldurmalısın";
+				$hata = true;
+			}
+		}
+		else
+		{
+			$mesaj = "Yeni şifren birbiriyle aynı değil.";
+			$hata = true;
+		}
+
+		$veriler = ["hata"=>$hata, "mesaj"=>$mesaj];
+		echo json_encode($veriler);
+	}
 }
 ?>

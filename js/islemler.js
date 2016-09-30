@@ -378,4 +378,60 @@ $(document).ready(function(){
             console.log(gorunum);
         }
     });
+
+    //metnin tümünü göstermek için
+    $(".tumunu-goster").click(function(e) {
+        var url = $(this).attr("href");
+        e.preventDefault();
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json'
+        }).done(function(data) {
+            $(".metin-modal-baslik").html(data.baslik);
+            $(".metin-modal-ic").html(data.orijinal_metin);
+            $('#metin-modal').openModal();
+        }).fail(function(data) {
+            console.log("error",data);
+        });
+    });
+
+    $(".ayarlar").click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $.ajax({
+            url: url,
+            type: 'get'
+        }).done(function(data) {
+            $(".orta").html(data);
+        }).fail(function(data) {
+            console.log("error",data);
+        });
+    });
+    
+    $(document).on('click','.kullanici-resmi',function () {
+        $("#kullanic-resmi").click();
+    });
 });
+
+function bilgileri_guncelle(form) {
+    var form_adi = $(form).attr("id");
+    var veriler = $(form).serialize()+"&form-adi="+form_adi+"&bilgileri_guncelle=true";
+    console.log(veriler);
+
+    $.ajax({
+        url: 'php/islemler.php',
+        type: 'post',
+        dataType: 'json',
+        data: veriler
+    }).done(function(data) {
+        Materialize.toast(data.mesaj,4000);
+        console.log(data);
+    }).fail(function(data) {
+        console.log("error",data);
+    });
+}
+
+function sifre_modalini_ac() {
+    $('#sifre-modal').openModal();
+}
