@@ -46,6 +46,7 @@ else{
     <title>translate to me</title>
 
     <!-- CSS  -->
+    <link href="css/cropper.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -285,12 +286,25 @@ else{
     </div>
 </div>
 <a class="btn-floating btn-large waves-effect waves-light red tooltipped yeni-cevrilecek-metin-ekle" data-position="top" data-delay="50" data-tooltip="Çevirisini yaptırmak için bir metin ekle"><i class="material-icons">add</i></a>
+<!-- Wrap the image or canvas element with a block element (container) -->
+<div class="resmi-kirp-kapsayici">
+	<div class="resmi-kirp-govde">
+		<blockquote class="resmi-kirp-aciklama">Resmine ift tıklarsan resmi kırpma veya taşıma moduna girersin.</blockquote>
+		<div class="resmi-kirp-div">
+			<img id="kullanici-resmi-img" style="max-width: 100%" src="">
+		</div>
+		<a class="btn waves-light waves-effect waves-block" id="resmi-yukle">Yükle</a>
+		<div class="on-izleme circle"></div>
+	</div>
+</div>
 <input type="hidden" value="<? echo $uye_id ?>" id="uye-id">
 <input type="hidden" value="<? echo $adi_soyadi ?>" id="adi-soyadi">
 <input type="hidden" value="<? echo $profil_resmi ?>" id="profil-resmi">
 <!--  Scripts-->
 <script src="jquery3/jquery-3.1.0.min.js"></script>
 <script src="js/islemler.js"></script>
+<script src="js/jquery.form.min.js"></script>
+<script src="js/cropper.min.js"></script>
 <script src="materialize/js/materialize.js"></script>
 <script src="materialize/js/init.js"></script>
 </body>

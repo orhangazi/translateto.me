@@ -121,94 +121,98 @@
     </column>
     <column id="37" parent="14" name="eposta">
       <mandatory>1</mandatory>
-      <data-type>text|0</data-type>
+      <data-type>tinytext|0</data-type>
     </column>
     <column id="38" parent="14" name="sifre">
       <mandatory>1</mandatory>
-      <data-type>text|0</data-type>
+      <data-type>tinytext|0</data-type>
     </column>
     <column id="39" parent="14" name="adi_soyadi">
       <mandatory>1</mandatory>
-      <data-type>text|0</data-type>
+      <data-type>tinytext|0</data-type>
     </column>
-    <column id="40" parent="14" name="profil_resmi">
+    <column id="40" parent="14" name="biyografi">
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="41" parent="14" name="kayit_tarihi">
+    <column id="41" parent="14" name="profil_resmi">
+      <mandatory>1</mandatory>
+      <data-type>tinytext|0</data-type>
+    </column>
+    <column id="42" parent="14" name="kayit_tarihi">
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <key id="42" parent="14" name="PRIMARY">
+    <key id="43" parent="14" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="43" parent="15" name="id">
+    <column id="44" parent="15" name="id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="44" parent="15" name="dil">
+    <column id="45" parent="15" name="dil">
       <comment>dil adı</comment>
       <mandatory>1</mandatory>
       <data-type>tinytext|0</data-type>
     </column>
-    <key id="45" parent="15" name="PRIMARY">
+    <key id="46" parent="15" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="46" parent="16" name="id">
+    <column id="47" parent="16" name="id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="47" parent="16" name="orijinal_metin_id">
+    <column id="48" parent="16" name="orijinal_metin_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="48" parent="16" name="yorum_sahibi_id">
+    <column id="49" parent="16" name="yorum_sahibi_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="49" parent="16" name="yorum">
+    <column id="50" parent="16" name="yorum">
       <mandatory>1</mandatory>
       <data-type>tinytext|0</data-type>
     </column>
-    <column id="50" parent="16" name="kayit_tarihi">
+    <column id="51" parent="16" name="kayit_tarihi">
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <key id="51" parent="16" name="PRIMARY">
+    <key id="52" parent="16" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="52" parent="17" name="id">
+    <column id="53" parent="17" name="id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="53" parent="17" name="ceviren_id">
+    <column id="54" parent="17" name="ceviren_id">
       <comment>çevirenin uye_id si</comment>
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="54" parent="17" name="cevrilmis_metin_id">
+    <column id="55" parent="17" name="cevrilmis_metin_id">
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="55" parent="17" name="ceviri_miktari">
+    <column id="56" parent="17" name="ceviri_miktari">
       <comment>kelime cinsinden çeviri miktarı</comment>
       <mandatory>1</mandatory>
       <data-type>int(10) unsigned|0</data-type>
     </column>
-    <column id="56" parent="17" name="ceviri_tarihi">
+    <column id="57" parent="17" name="ceviri_tarihi">
       <mandatory>1</mandatory>
       <data-type>timestamp|0</data-type>
       <default-expression>CURRENT_TIMESTAMP</default-expression>
     </column>
-    <key id="57" parent="17" name="PRIMARY">
+    <key id="58" parent="17" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>

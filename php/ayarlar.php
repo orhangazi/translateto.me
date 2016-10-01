@@ -22,7 +22,7 @@ echo "<div class='row ayar-bolumu'>
 		  	<ul class='collection'>
 				<li class='collection-item avatar ayar-bilgiler'>
 				  <img src='resimler/kullanici_resmi_50x50.png' alt='' class='circle kullanici-resmi'>
-				  <input type='file' name='kullanici-resmi' style='display: none;' id='kullanic-resmi'>
+				  <input type='file' name='kullanici-resmi' style='display: none;' id='kullanici-resmi-dosya'>
 				  <div class='input-field col s6'>
 					  <input id='adi-soyadi' name='adi-soyadi' type='text' value='$adi_soyadi'>
 					  <label for='adi-soyadi' class='active'>Adın ve soyadın</label>
@@ -100,4 +100,5 @@ echo "<div class='row ayar-bolumu'>
 </div>
 <script>$(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
-  });</script>";
+    
+  });</script></script>";

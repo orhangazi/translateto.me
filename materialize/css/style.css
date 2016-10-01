@@ -228,3 +228,37 @@ h6{
 .kullanici-resmi{
     cursor: pointer;
 }
+
+.resmi-kirp-div,.resmi-kirp-govde{
+    width: 600px;
+    margin: 0 auto;
+}
+
+.on-izleme{
+    top: -380px;
+    left: -113px;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+
+/*içeriği kadar yüksekliği ayarlanan modal*/
+.resmi-kirp-kapsayici{
+    display: none;
+    position: absolute;
+    top: 0;
+    /* bottom: 0; */
+    width: 100%;
+    /* height: 100%; */
+    background-color: rgba(0,0,0,0.8);
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.resmi-kirp-aciklama{
+    background: white;
+    padding: 8px;
+    margin-bottom: 0px;
+}

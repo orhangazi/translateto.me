@@ -17,17 +17,18 @@ $(document).ready(function(){
         ceviri_ortami_katmani = $(".ceviri-kapsayici").data("isOpen");
         giris_formu_katmani = $(".giris-kayit-divi").data("isOpen");
         yeni_metin_ekleme_katmani = $(".cevrilecek-metin-ekleme-divi").data("isOpen");
-
-        if(ceviri_ortami_katmani || giris_formu_katmani || yeni_metin_ekleme_katmani){
+        resmi_kirp_kapsayici = $(".resmi-kirp-kapsayici").data("isOpen");
+        if(ceviri_ortami_katmani || giris_formu_katmani || yeni_metin_ekleme_katmani || resmi_kirp_kapsayici){
             var keyCode = e.keyCode;
             if(keyCode == 27){
                 $(".ceviri-kapsayici").data("isOpen",false);
                 $(".giris-kayit-divi").data("isOpen",false);
                 $(".cevrilecek-metin-ekleme-divi").data("isOpen",false);
+                $(".resmi-kirp-kapsayici").data("isOpen",false);
                 $(".ceviri-kapsayici").fadeOut(100);
                 $(".giris-kayit-divi").fadeOut(100);
                 $(".cevrilecek-metin-ekleme-divi").fadeOut(100);
-
+                $(".resmi-kirp-kapsayici").fadeOut(100);
 
                 $('html, body').css({
                     'overflow': 'auto',
@@ -396,6 +397,7 @@ $(document).ready(function(){
         });
     });
 
+    //ayarları kaydeder
     $(".ayarlar").click(function (e) {
         e.preventDefault();
         var url = $(this).attr("href");
@@ -408,10 +410,85 @@ $(document).ready(function(){
             console.log("error",data);
         });
     });
-    
+
+    //kullanıcı resmini değiştirir
     $(document).on('click','.kullanici-resmi',function () {
-        $("#kullanic-resmi").click();
+        $("#kullanici-resmi-dosya").click();
     });
+
+    $('#kullanici-resmi-img').cropper({
+        aspectRatio: 1/1,
+        preview:$('.on-izleme')
+    });
+    
+    //yükleme yap
+    $("#resmi-yukle").click(function () {
+        var kirpma_verileri = $('#kullanici-resmi-img').cropper('getData',{rounded:true});
+        kirpma_verileri = JSON.stringify(kirpma_verileri);
+        //resim_input = $("#kullanici-resmi-dosya");
+        resim_input = document.getElementById("kullanici-resmi-dosya");
+        resim = resim_input.files[0];
+        resim_formdata = new FormData();
+        resim_formdata.append('kullanici-resmi-dosya',resim);
+        resim_formdata.append('kirpma-verileri',kirpma_verileri);
+        resim_formdata.append('resmi-yukle',true);
+        console.log(kirpma_verileri);
+
+        $.ajax({
+            url: 'php/islemler.php',
+            type: 'post',
+            dataType: 'json',
+            enctype: 'multipart/form-data',
+            processData: false,  // do not process the data as url encoded params
+            contentType: false,   // by default jQuery sets this to urlencoded string
+            data: resim_formdata
+        }).done(function(data) {
+            console.log(data.mesaj);
+            console.log(data.nesne);
+            console.log(data);
+        }).fail(function(data) {
+            console.log("error",data);
+        });
+    });
+
+    // Import image
+    var $inputImage = $('#kullanici-resmi-dosya');
+    var $image = $('#kullanici-resmi-img');
+    var URL = window.URL || window.webkitURL;
+    var blobURL;
+
+    if (URL) {
+        $(document).on('change','#kullanici-resmi-dosya',function () {
+
+            $(".resmi-kirp-kapsayici").data("isOpen",true);
+            $(".resmi-kirp-kapsayici").fadeIn(100);
+
+            var files = this.files;
+            var file;
+
+            if (!$image.data('cropper')) {
+                return;
+            }
+
+            if (files && files.length) {
+                file = files[0];
+
+                if (/^image\/\w+$/.test(file.type)) {
+                    blobURL = URL.createObjectURL(file);
+                    $image.one('built.cropper', function () {
+
+                        // Revoke when load complete
+                        URL.revokeObjectURL(blobURL);
+                    }).cropper('reset').cropper('replace', blobURL);
+                    $inputImage.val('');
+                } else {
+                    window.alert('Lütfen bir resim dosyası seçin');
+                }
+            }
+        });
+    } else {
+        //$inputImage.prop('disabled', true).parent().addClass('disabled');
+    }
 });
 
 function bilgileri_guncelle(form) {
@@ -430,8 +507,4 @@ function bilgileri_guncelle(form) {
     }).fail(function(data) {
         console.log("error",data);
     });
-}
-
-function sifre_modalini_ac() {
-    $('#sifre-modal').openModal();
 }

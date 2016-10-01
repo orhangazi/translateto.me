@@ -341,6 +341,7 @@ if($cevirttigim_metinler){
 	echo json_encode(["mesaj"=>$html]);
 }
 
+//üyenin bilgilerini ve ayarlarını günceller
 $bilgileri_guncelle = $_POST['bilgileri_guncelle'];
 if($bilgileri_guncelle){
 	$uye_id = $_SESSION['id'];
@@ -440,5 +441,59 @@ if($bilgileri_guncelle){
 		$veriler = ["hata"=>$hata, "mesaj"=>$mesaj];
 		echo json_encode($veriler);
 	}
+}
+
+$resmi_yukle = $_POST['resmi-yukle'];
+if(isset($resmi_yukle)){
+	$kirpma_verileri = json_decode($_POST['kirpma-verileri'],true);//true kullanılırsa array olarak, kullanılmazsa object olarak çıktı verir
+	$gelen_resim_adi = $_FILES['kullanici-resmi-dosya']['name'];
+	$gelen_resim_yolu = $_FILES['kullanici-resmi-dosya']['tmp_name'];
+	$gelen_resim_tipi = $_FILES['kullanici-resmi-dosya']['type'];
+	$gelen_resim_boyutu = $_FILES['kullanici-resmi-dosya']['size'];
+
+	$kirpilmis_resim_genislik = $kirpma_verileri['width'];
+	$kirpilmis_resim_yukseklik = $kirpma_verileri['height'];
+	$kirpilmis_resim_x = $kirpma_verileri['x'];
+	$kirpilmis_resim_y = $kirpma_verileri['y'];
+
+	list($gelen_resim_genislik,$gelen_resim_yukseklik) = getimagesize($gelen_resim_yolu);
+	$yeni_genislik = 100;
+	$yeni_yukseklik = 100;
+	$kalite = 75; //yüksek kaliteye yakın IJP standardı 75
+
+	/*$yeni_resim_tuvali = imagecreatetruecolor($yeni_genislik,$yeni_yukseklik);
+	$kaynak_resim = imagecreatefromjpeg($gelen_resim_yolu);
+
+	imagecopyresampled($yeni_resim_tuvali,$kaynak_resim,0,0,0,0,$yeni_genislik,$yeni_yukseklik,$gelen_resim_genislik,$gelen_resim_yukseklik);
+	imagejpeg($yeni_resim_tuvali,'../resimler/gecici/1.jpg',85);*/
+
+	$eski_resim = imagecreatefromjpeg($gelen_resim_yolu);
+	$kirpilmis_resim_resim_tuvali = imagecreatetruecolor($kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
+
+	imagecopyresampled($kirpilmis_resim_resim_tuvali,$eski_resim,0,0,$kirpilmis_resim_x,$kirpilmis_resim_y,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
+	$yeni_resim_tuvali = imagecreatetruecolor($yeni_genislik,$yeni_yukseklik);
+
+	imagecopyresampled($yeni_resim_tuvali,$kirpilmis_resim_resim_tuvali,0,0,0,0,$yeni_genislik,$yeni_genislik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);//resmi 100x100 küçülttüm.
+
+	/*$gelen_resim = imagecreatefromjpeg($gelen_resim_yolu);*/
+
+	$uye_id = $_SESSION['id'];
+	$kayit_yeri = "../resimler/kullanici/$uye_id.jpg";
+
+	//$kaydet = imagejpeg($gelen_resim,$kayit_yeri, $kalite);
+	$kaydet = imagejpeg($yeni_resim_tuvali,$kayit_yeri, $kalite);
+
+	if($kaydet){
+		$mesaj = "Başarılı. Resim kaydedildi.";
+	}
+	else{
+		$mesaj = "Başarısız. Resim kaydedilemedi.";
+	}
+
+	//$kirpma_verileri = json_decode($gelen_veriler,true);
+	//var_dump($kirpma_verileri);
+	//$x = $kirpma_verileri['x'];
+	$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
+	echo json_encode($json_dizi);
 }
 ?>
