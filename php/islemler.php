@@ -445,54 +445,73 @@ if($bilgileri_guncelle){
 
 $resmi_yukle = $_POST['resmi-yukle'];
 if(isset($resmi_yukle)){
+	ini_set('memory_limit','512M');
+	define('MB', 1048576);
 	$kirpma_verileri = json_decode($_POST['kirpma-verileri'],true);//true kullanılırsa array olarak, kullanılmazsa object olarak çıktı verir
 	$gelen_resim_adi = $_FILES['kullanici-resmi-dosya']['name'];
 	$gelen_resim_yolu = $_FILES['kullanici-resmi-dosya']['tmp_name'];
 	$gelen_resim_tipi = $_FILES['kullanici-resmi-dosya']['type'];
 	$gelen_resim_boyutu = $_FILES['kullanici-resmi-dosya']['size'];
 
+	if($gelen_resim_boyutu > 15*MB){
+		$mesaj = "Resim boyutu çok yüksek. En fazla 15 mb boyutunda resim yükleyebilirsiniz";
+		$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
+		echo json_encode($json_dizi);
+		return;
+	}
+
 	$kirpilmis_resim_genislik = $kirpma_verileri['width'];
 	$kirpilmis_resim_yukseklik = $kirpma_verileri['height'];
 	$kirpilmis_resim_x = $kirpma_verileri['x'];
 	$kirpilmis_resim_y = $kirpma_verileri['y'];
+	$kirpilmis_resim_donme_acisi = $kirpma_verileri['rotate'];
 
 	list($gelen_resim_genislik,$gelen_resim_yukseklik) = getimagesize($gelen_resim_yolu);
 	$yeni_genislik = 100;
 	$yeni_yukseklik = 100;
 	$kalite = 75; //yüksek kaliteye yakın IJP standardı 75
 
-	/*$yeni_resim_tuvali = imagecreatetruecolor($yeni_genislik,$yeni_yukseklik);
-	$kaynak_resim = imagecreatefromjpeg($gelen_resim_yolu);
-
-	imagecopyresampled($yeni_resim_tuvali,$kaynak_resim,0,0,0,0,$yeni_genislik,$yeni_yukseklik,$gelen_resim_genislik,$gelen_resim_yukseklik);
-	imagejpeg($yeni_resim_tuvali,'../resimler/gecici/1.jpg',85);*/
-
 	$eski_resim = imagecreatefromjpeg($gelen_resim_yolu);
-	$kirpilmis_resim_resim_tuvali = imagecreatetruecolor($kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
 
-	imagecopyresampled($kirpilmis_resim_resim_tuvali,$eski_resim,0,0,$kirpilmis_resim_x,$kirpilmis_resim_y,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
+	if($kirpilmis_resim_donme_acisi==90){
+		//list($gelen_resim_yukseklik,$gelen_resim_genislik) = getimagesize($gelen_resim_yolu);
+		//resmi sağa döndürür
+		//cropper.js nin bilinen bir hatası yüzünden çok büyük boyutlu dosyalarda otomatik döndürme yapıyor. Özellikle iphone fotoğraflarında.
+		//onun sola yatırdığı fotoğrafları tekrar sağa yatırmak için bunu kullanıyorum.
+		$eski_resim = imagerotate($eski_resim,-90,0);
+
+		if($eski_resim){
+			$mesaj_ek = "döndürme başarılı";
+		}else{
+			$mesaj_ek = "döndürme başarısız";
+		}
+	}
+
+	$kirpilmis_resim_tuvali = imagecreatetruecolor($kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
+
+	imagecopyresampled($kirpilmis_resim_tuvali,$eski_resim,0,0,$kirpilmis_resim_x,$kirpilmis_resim_y,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
 	$yeni_resim_tuvali = imagecreatetruecolor($yeni_genislik,$yeni_yukseklik);
 
-	imagecopyresampled($yeni_resim_tuvali,$kirpilmis_resim_resim_tuvali,0,0,0,0,$yeni_genislik,$yeni_genislik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);//resmi 100x100 küçülttüm.
-
-	/*$gelen_resim = imagecreatefromjpeg($gelen_resim_yolu);*/
+	imagecopyresampled($yeni_resim_tuvali,$kirpilmis_resim_tuvali,0,0,0,0,$yeni_genislik,$yeni_genislik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);//resmi 100x100 küçülttüm.
 
 	$uye_id = $_SESSION['id'];
 	$kayit_yeri = "../resimler/kullanici/$uye_id.jpg";
-
-	//$kaydet = imagejpeg($gelen_resim,$kayit_yeri, $kalite);
+	$profil_resmi = "resimler/kullanici/$uye_id.jpg";
 	$kaydet = imagejpeg($yeni_resim_tuvali,$kayit_yeri, $kalite);
 
+	imagedestroy($yeni_resim_tuvali);
+	imagedestroy($kirpilmis_resim_tuvali);
+	imagedestroy($eski_resim);
+
 	if($kaydet){
-		$mesaj = "Başarılı. Resim kaydedildi.";
+		$resmin_yolunu_kaydet_sql = mysqli_query($baglan,"update uyeler set profil_resmi='$profil_resmi' where id=$uye_id");
+
+		$mesaj = $resmin_yolunu_kaydet_sql?"Başarılı. Resim kaydedildi.":"Resmi kaydederken sorun yaşadık. Tekrar dene";
 	}
 	else{
-		$mesaj = "Başarısız. Resim kaydedilemedi.";
+		$mesaj = "Başarısız. Resim kaydedilemedi tekrar deneyin";
 	}
 
-	//$kirpma_verileri = json_decode($gelen_veriler,true);
-	//var_dump($kirpma_verileri);
-	//$x = $kirpma_verileri['x'];
 	$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
 	echo json_encode($json_dizi);
 }

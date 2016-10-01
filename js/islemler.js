@@ -418,7 +418,8 @@ $(document).ready(function(){
 
     $('#kullanici-resmi-img').cropper({
         aspectRatio: 1/1,
-        preview:$('.on-izleme')
+        preview:$('.on-izleme'),
+        rotatable:true
     });
     
     //yükleme yap
