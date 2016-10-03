@@ -142,7 +142,6 @@ $(document).ready(function(){
 
     //çeviriyi kaydeder
     function ceviriyiKaydet() {
-        var uye_id = $("#uye-id").val();
         var orijinal_metin_id = $("#orijinal-metin-id").val();
         var cevrilmis_metin = $("#cevrilen-metin").val();
         var cevrilecek_dil_id = $("#cevrilecek-dil-id").val();
@@ -174,14 +173,12 @@ $(document).ready(function(){
 
     //yorumları kaydeder
     function yorumuKaydet() {
-        var uye_id = $("#uye-id").val();
         var adi_soyadi = $("#adi-soyadi").val();
         var profil_resmi = $("#profil-resmi").val();
         var yorum = $("#yorum").val();
         var orijinal_metin_id = $("#orijinal-metin-id").val();
 
         var veriler = {
-            "uye_id":uye_id,
             "orijinal_metin_id":orijinal_metin_id,
             "yorum":yorum,
             "yorum_kaydedilsin_mi":true
@@ -194,7 +191,7 @@ $(document).ready(function(){
             data:veriler
         }).done(function(data) {
             if(!data.hata){
-                var gonderilen_yorum = "<ul class='collection'><li class='collection-item avatar'><img src='"+profil_resmi+"' alt='' class='circle'> <span class='title'><strong>"+adi_soyadi+"</strong></span> <p>"+yorum+"</p> </li> </ul>";
+                var gonderilen_yorum = "<ul class='collection'><li class='collection-item avatar'><img src='"+data.profil_resmi+"' alt='"+data.adi_soyadi+"' class='circle'> <span class='title'><strong>"+data.adi_soyadi+"</strong></span> <p>"+yorum+"</p> </li> </ul>";
                 $(".yorumlar-modal-ic>h5").empty();
                 $(".yorumlar-modal-ic").append(gonderilen_yorum);
                 $("#yorumlar-modal > div.modal-content").animate({ scrollTop: $("#yorumlar-modal > div.modal-content")[0].scrollHeight }, 1000);
@@ -309,7 +306,6 @@ $(document).ready(function(){
     $("#cevrilecek-metin-formu").submit(function (e){
         e.preventDefault();
         console.log($(this).serialize());
-        var metin_sahibi_id = $("#uye-id").val();
         var veriler = $(this).serialize();
         $.ajax({
             url: 'php/islemler.php',
@@ -414,6 +410,7 @@ $(document).ready(function(){
     //kullanıcı resmini değiştirir
     $(document).on('click','.kullanici-resmi',function () {
         $("#kullanici-resmi-dosya").click();
+        $('.surec-ic').css({width:'0%'});
     });
 
     $('#kullanici-resmi-img').cropper({
@@ -424,6 +421,7 @@ $(document).ready(function(){
     
     //yükleme yap
     $("#resmi-yukle").click(function () {
+        $('.surec-ic').css({width:'0%'});
         var kirpma_verileri = $('#kullanici-resmi-img').cropper('getData',{rounded:true});
         kirpma_verileri = JSON.stringify(kirpma_verileri);
         //resim_input = $("#kullanici-resmi-dosya");
@@ -433,20 +431,46 @@ $(document).ready(function(){
         resim_formdata.append('kullanici-resmi-dosya',resim);
         resim_formdata.append('kirpma-verileri',kirpma_verileri);
         resim_formdata.append('resmi-yukle',true);
-        console.log(kirpma_verileri);
+        //console.log(kirpma_verileri);
 
         $.ajax({
             url: 'php/islemler.php',
             type: 'post',
             dataType: 'json',
             enctype: 'multipart/form-data',
+            cache: false,
             processData: false,  // do not process the data as url encoded params
             contentType: false,   // by default jQuery sets this to urlencoded string
-            data: resim_formdata
+            data: resim_formdata,
+            xhr: function() {
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) {
+                    myXhr.upload.addEventListener('progress',function(ev) {
+                        if (ev.lengthComputable) {
+                            var percentUploaded = Math.floor(ev.loaded * 100 / ev.total);
+                            console.log('Uploaded '+percentUploaded+'%');
+                            $('.surec-ic').css({width:percentUploaded+'%'});
+                            // update UI to reflect percentUploaded
+                        } else {
+                            console.info('Uploaded '+ev.loaded+' bytes');
+                            // update UI to reflect bytes uploaded
+                        }
+                    }, false);
+                }
+                return myXhr;
+            }
         }).done(function(data) {
-            console.log(data.mesaj);
-            console.log(data.nesne);
-            console.log(data);
+            if(!data.hata){
+                $(".collection-item.avatar>img").attr('src','');
+                $(".collection-item.avatar>img").attr('src',data.profil_resmi);
+                $(".resmi-kirp-kapsayici").fadeOut(100);
+                $(".resmi-kirp-kapsayici").data("isOpen",false);
+                Materialize.toast(data.mesaj,5000);
+            }else {
+                $(".resmi-kirp-kapsayici").fadeOut(100);
+                $(".resmi-kirp-kapsayici").data("isOpen",false);
+                Materialize.toast(data.mesaj,5000);
+            }
         }).fail(function(data) {
             console.log("error",data);
         });
@@ -483,7 +507,9 @@ $(document).ready(function(){
                     }).cropper('reset').cropper('replace', blobURL);
                     $inputImage.val('');
                 } else {
-                    window.alert('Lütfen bir resim dosyası seçin');
+                    $(".resmi-kirp-kapsayici").fadeOut(100);
+                    $(".resmi-kirp-kapsayici").data("isOpen",false);
+                    Materialize.toast('Lütfen bir resim dosyası seçin',5000);
                 }
             }
         });

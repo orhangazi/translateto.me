@@ -8,12 +8,20 @@
 include "baglan.php";
 
 $uye_id = $_SESSION['id'];
-$uye_bilgileri_sql = mysqli_query($baglan,"select * from uyeler where id=$uye_id limit 1");
+if(empty($uye_id)){
+	header("Locate:index.php");
+}
+
+$uye_bilgileri_sql = mysqli_query($baglan,"select * from uyeler,ayarlar where uyeler.id=$uye_id and ayarlar.uye_id=$uye_id limit 1");
 $uye_bilgileri = mysqli_fetch_object($uye_bilgileri_sql);
 $adi_soyadi = $uye_bilgileri->adi_soyadi;
 $biyografi = $uye_bilgileri->biyografi;
 $profil_resmi = $uye_bilgileri->profil_resmi;
 $eposta = $uye_bilgileri->eposta;
+$iban_no = $uye_bilgileri->iban_no;
+$yeni_metin_sayisi = $uye_bilgileri->yeni_metin_sayisi;
+
+$profil_resmi = $profil_resmi==""?"resimler/kullanici_resmi_50x50.png":$profil_resmi;
 
 echo "<div class='row ayar-bolumu'>
     <div class='col s8'>
@@ -21,7 +29,7 @@ echo "<div class='row ayar-bolumu'>
 		<form class='col s12' id='kisisel-bilgileri-guncelleme-formu' onsubmit='bilgileri_guncelle(this); return false'>
 		  	<ul class='collection'>
 				<li class='collection-item avatar ayar-bilgiler'>
-				  <img src='resimler/kullanici_resmi_50x50.png' alt='' class='circle kullanici-resmi'>
+				  <img src='$profil_resmi' alt='' class='circle kullanici-resmi'>
 				  <input type='file' name='kullanici-resmi' style='display: none;' id='kullanici-resmi-dosya'>
 				  <div class='input-field col s6'>
 					  <input id='adi-soyadi' name='adi-soyadi' type='text' value='$adi_soyadi'>
@@ -64,12 +72,31 @@ echo "<div class='row ayar-bolumu'>
 		  </div>
 		  <button class='btn waves-effect waves-light tam-genislik tooltipped' data-position='top' data-delay='50' data-tooltip='Sadece Entera basarak da kaydedebilirsin'>Kaydet</button>
 		</form>
+		<form class='col s6' id='iban-degistirme-formu' onsubmit='bilgileri_guncelle(this); return false;'>
+		  <div class='row'>
+			<span class='ayar-basligi'>IBAN No</span>
+			<div class='input-field col s12'>
+			  <input id='iban' name='iban-no' type='text' value='$iban_no'>
+			  <label for='iban' class='active'>IBAN numarası</label>
+			</div>
+		  </div>
+		  <button class='btn waves-effect waves-light tam-genislik tooltipped' data-position='top' data-delay='50' data-tooltip='Sadece Entera basarak da kaydedebilirsin'>Kaydet</button>
+		</form>
+		<form class='col s6' id='eposta-gonderim-ayari-formu' onsubmit='bilgileri_guncelle(this); return false;'>
+		  <div class='row'>
+			<span class='ayar-basligi'>Eposta gönderme ayarları</span>
+			<div class='input-field col s12'>
+			  Bu kadar ya da daha fazla yeni çevrilecek metin kaydedildiğinde bana eposta gönder:<input id='yeni-metin-sayisi' name='yeni-metin-sayisi' type='text' value='$yeni_metin_sayisi'>
+			</div>
+		  </div>
+		  <button class='btn waves-effect waves-light tam-genislik tooltipped' data-position='top' data-delay='50' data-tooltip='Sadece Entera basarak da kaydedebilirsin'>Kaydet</button>
+		</form>
 	</div>
    	<div class='col s4'>
       <div class='row'>
        	 <ul class='collection'>
 			<li class='collection-item avatar'>
-			  <img src='resimler/kullanici_resmi_50x50.png' alt='' class='circle'>
+			  <img src='$profil_resmi' alt='' class='circle'>
 			  <span class='title'>Bilgilerini Değiştir</span>
 			  <p>Kullanıcı bilgilerini değiştirebilirsin. Böylece daha dikkat çekici olursun.</p>
 			</li>
@@ -82,6 +109,11 @@ echo "<div class='row ayar-bolumu'>
 			  <i class='material-icons circle green'>lock_outline</i>
 			  <span class='title'>Şifreni Değiştir</span>
 			  <p>Şifreni değiştirmen gerektiğinde</p>
+			</li>
+			<li class='collection-item avatar'>
+			  <i class='material-icons circle green'>group_work</i>
+			  <span class='title'>IBAN no</span>
+			  <p>Ödemeleri yapabilmemiz için iban numaranızı kaydetmelisiniz.</p>
 			</li>
 			<li class='collection-item avatar'>
 			  <i class='material-icons circle green'>comment</i>

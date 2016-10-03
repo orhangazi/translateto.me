@@ -158,7 +158,9 @@ $yorum_kaydedilsin_mi = $_POST['yorum_kaydedilsin_mi'];
 if ($yorum_kaydedilsin_mi){
     $orijinal_metin_id = $_POST['orijinal_metin_id'];
     $yorum = mysqli_real_escape_string($baglan,trim($_POST['yorum']));
-    $yorum_sahibi_id = $_POST['uye_id'];
+    $yorum_sahibi_id = $_SESSION['id'];
+	$adi_soyadi = $_SESSION["adi_soyadi"];
+	$profil_resmi = $_SESSION["profil_resmi"];
     if(!empty($yorum)){
         $yorumu_kaydet_sql = mysqli_query($baglan,"insert into yorumlar(yorum_sahibi_id,yorum,orijinal_metin_id) values('$yorum_sahibi_id','$yorum','$orijinal_metin_id')");
         $hata = ($yorumu_kaydet_sql)?false:true;
@@ -169,7 +171,7 @@ if ($yorum_kaydedilsin_mi){
         $mesaj = "Boş yorum kaydedilemez";
     }
 
-    echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
+    echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj,"adi_soyadi"=>$adi_soyadi,"profil_resmi"=>$profil_resmi]);
 }
 
 //üye kaydı yapar
@@ -189,7 +191,9 @@ if ($uye_kaydi_yapilsin_mi){
         $hata = ($uyeyi_kaydet_sql)?false:true;
         if ($uyeyi_kaydet_sql) {
             $_SESSION["eposta"] = $eposta;
-			$_SESSION["id"] = mysqli_insert_id($baglan);
+			$uye_id = mysqli_insert_id($baglan);
+			$ayar_ekle_sql = mysqli_query($baglan,"insert into ayarlar(uye_id) values($uye_id)");
+			$_SESSION["id"] = $uye_id;
 			$_SESSION["adi_soyadi"] = $adi_soyadi;
 			$_SESSION["profil_resmi"] = "resimler/kullanici_resmi_50x50.png";
             $mesaj = "<script>location.reload();</script><strong>Hoşgeldiniz.</strong>";
@@ -247,7 +251,7 @@ if($cevrilecek_metin_kaydedilsin_mi){
 	$metin_basligi = mysqli_real_escape_string($baglan,$_POST["metin-basligi"]);
 	$cevrilen_metin_notu = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin-notu"]);
 	$cevrilen_metin = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin"]);
-	$metin_sahibi_id = mysqli_real_escape_string($baglan,$_POST["metin-sahibi-id"]);
+	$metin_sahibi_id = $_SESSION["id"];
 	$orijinal_dil_id = mysqli_real_escape_string($baglan,$_POST["orijinal-dil"]);
 	$cevrilecek_dil_id = mysqli_real_escape_string($baglan,$_POST["cevrilecek-dil"]);
 
@@ -395,57 +399,98 @@ if($bilgileri_guncelle){
 		$veriler = ["hata"=>$hata, "mesaj"=>$mesaj];
 		echo json_encode($veriler);
 	}
-	else if($form_adi=="sifre-degistirme-formu"){
-		$eski_sifre = mysqli_real_escape_string($baglan,$_POST['suanki-sifre']);
-		$yeni_sifre = mysqli_real_escape_string($baglan,$_POST['yeni-sifre']);
-		$yeni_sifre_2 = mysqli_real_escape_string($baglan,$_POST['yeni-sifre-2']);
+	else if($form_adi=="sifre-degistirme-formu") {
+		$eski_sifre = mysqli_real_escape_string($baglan, $_POST['suanki-sifre']);
+		$yeni_sifre = mysqli_real_escape_string($baglan, $_POST['yeni-sifre']);
+		$yeni_sifre_2 = mysqli_real_escape_string($baglan, $_POST['yeni-sifre-2']);
 
-		if($yeni_sifre==$yeni_sifre_2){
-			if(!empty($eski_sifre) && !empty($yeni_sifre) && !empty($yeni_sifre_2)){
+		if ($yeni_sifre == $yeni_sifre_2) {
+			if (!empty($eski_sifre) && !empty($yeni_sifre) && !empty($yeni_sifre_2)) {
 				$options = [
 					'cost' => 12
 				];
 				$yeni_sifre = password_hash($yeni_sifre, PASSWORD_BCRYPT, $options);
 
-				$vt_sifre_sql = mysqli_query($baglan,"select sifre from uyeler where id=$uye_id limit 1");
+				$vt_sifre_sql = mysqli_query($baglan, "select sifre from uyeler where id=$uye_id limit 1");
 				$vt_sifre_nesne = mysqli_fetch_object($vt_sifre_sql);
 				$vt_sifre = $vt_sifre_nesne->sifre;
 
-				$sifre_uyusuyor_mu = password_verify($eski_sifre,$vt_sifre);
-				if($sifre_uyusuyor_mu){
-					$sifreyi_guncelle_sql = mysqli_query($baglan,"update uyeler set sifre='$yeni_sifre' where id=$uye_id");
-					if($sifreyi_guncelle_sql){
+				$sifre_uyusuyor_mu = password_verify($eski_sifre, $vt_sifre);
+				if ($sifre_uyusuyor_mu) {
+					$sifreyi_guncelle_sql = mysqli_query($baglan, "update uyeler set sifre='$yeni_sifre' where id=$uye_id");
+					if ($sifreyi_guncelle_sql) {
 						$mesaj = "Şifren başarıyla güncellendi";
 						$hata = false;
-					}else{
+					}
+					else {
 						$mesaj = "Güncellemede sorun çıktı. Tekrar dene.";
 						$hata = true;
 					}
 				}
-				else{
+				else {
 					$mesaj = "Eski şifreni yanlış girdin. Tekrar dene.";
 					$hata = true;
 				}
 			}
-			else{
+			else {
 				$mesaj = "Şifreni değiştirebilmek için tüm alanları doldurmalısın";
 				$hata = true;
 			}
 		}
-		else
-		{
+		else {
 			$mesaj = "Yeni şifren birbiriyle aynı değil.";
 			$hata = true;
 		}
 
-		$veriler = ["hata"=>$hata, "mesaj"=>$mesaj];
+		$veriler = ["hata" => $hata, "mesaj" => $mesaj];
 		echo json_encode($veriler);
+	}
+	else if($form_adi=="iban-degistirme-formu"){
+		$iban_no = $_POST['iban-no'];
+		$uye_id = $_SESSION['id'];
+		$iban_no_guncelle_sql = mysqli_query($baglan,"update uyeler set iban_no='$iban_no' where id=$uye_id");
+		if($iban_no_guncelle_sql){
+			$mesaj = "IBAN numaran kaydedildi.";
+			$hata = false;
+		}
+		else {
+			$mesaj = "IBAN numaran kaydedilemedi. Tekrar deneyin.";
+			$hata = true;
+		}
+
+		$veriler = ["hata" => $hata, "mesaj" => $mesaj.mysqli_error($baglan)];
+		echo json_encode($veriler);
+	}
+	else if($form_adi=="eposta-gonderim-ayari-formu"){
+		$yeni_metin_sayisi = mysqli_real_escape_string($baglan,$_POST['yeni-metin-sayisi']);
+		if(is_numeric($yeni_metin_sayisi)){
+			$uye_id = $_SESSION['id'];
+			$eposta_gonderme_ayarini_guncelle_sql = mysqli_query($baglan,"update ayarlar set yeni_metin_sayisi='$yeni_metin_sayisi' where uye_id=$uye_id");
+			if($eposta_gonderme_ayarini_guncelle_sql){
+				$mesaj = "Ayarın kaydedildi.";
+				$hata = false;
+			}
+			else {
+				$mesaj = "Ayarın kaydedilemedi. Tekrar dene.";
+				$hata = true;
+			}
+
+			$veriler = ["hata" => $hata, "mesaj" => $mesaj];
+			echo json_encode($veriler);
+		}
+		else{
+			$veriler = ["hata" => true, "mesaj" => "Sadece sayı girebilirsin"];
+			echo json_encode($veriler);
+		}
 	}
 }
 
+
+//kullanıcı resmini yükler
 $resmi_yukle = $_POST['resmi-yukle'];
 if(isset($resmi_yukle)){
 	ini_set('memory_limit','512M');
+	ini_set ('gd.jpeg_ignore_warning', 1); //bazı resim dosyalarında bu hatanın oluşmasını engellemek için. imagecreatefromjpeg libjpeg: recoverable error: Invalid SOS parameters for sequential JPEG
 	define('MB', 1048576);
 	$kirpma_verileri = json_decode($_POST['kirpma-verileri'],true);//true kullanılırsa array olarak, kullanılmazsa object olarak çıktı verir
 	$gelen_resim_adi = $_FILES['kullanici-resmi-dosya']['name'];
@@ -453,66 +498,109 @@ if(isset($resmi_yukle)){
 	$gelen_resim_tipi = $_FILES['kullanici-resmi-dosya']['type'];
 	$gelen_resim_boyutu = $_FILES['kullanici-resmi-dosya']['size'];
 
-	if($gelen_resim_boyutu > 15*MB){
-		$mesaj = "Resim boyutu çok yüksek. En fazla 15 mb boyutunda resim yükleyebilirsiniz";
+	if(!getimagesize($gelen_resim_yolu)){
+		$mesaj = "Resim dosyanız bozuk. Lütfen geçerli bir resim dosyası yükleyin.";
 		$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
 		echo json_encode($json_dizi);
 		return;
 	}
 
-	$kirpilmis_resim_genislik = $kirpma_verileri['width'];
-	$kirpilmis_resim_yukseklik = $kirpma_verileri['height'];
-	$kirpilmis_resim_x = $kirpma_verileri['x'];
-	$kirpilmis_resim_y = $kirpma_verileri['y'];
-	$kirpilmis_resim_donme_acisi = $kirpma_verileri['rotate'];
+	$gecerli_dosya_turleri = ["image/jpeg", "image/jpg", "image/gif","image/png"];
+	if(in_array($gelen_resim_tipi,$gecerli_dosya_turleri)){
 
-	list($gelen_resim_genislik,$gelen_resim_yukseklik) = getimagesize($gelen_resim_yolu);
-	$yeni_genislik = 100;
-	$yeni_yukseklik = 100;
-	$kalite = 75; //yüksek kaliteye yakın IJP standardı 75
-
-	$eski_resim = imagecreatefromjpeg($gelen_resim_yolu);
-
-	if($kirpilmis_resim_donme_acisi==90){
-		//list($gelen_resim_yukseklik,$gelen_resim_genislik) = getimagesize($gelen_resim_yolu);
-		//resmi sağa döndürür
-		//cropper.js nin bilinen bir hatası yüzünden çok büyük boyutlu dosyalarda otomatik döndürme yapıyor. Özellikle iphone fotoğraflarında.
-		//onun sola yatırdığı fotoğrafları tekrar sağa yatırmak için bunu kullanıyorum.
-		$eski_resim = imagerotate($eski_resim,-90,0);
-
-		if($eski_resim){
-			$mesaj_ek = "döndürme başarılı";
-		}else{
-			$mesaj_ek = "döndürme başarısız";
+		if($gelen_resim_boyutu > 15*MB){
+			$mesaj = "Resim boyutu çok yüksek. En fazla 15 mb boyutunda resim yükleyebilirsiniz";
+			$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
+			echo json_encode($json_dizi);
+			return;
 		}
+
+		$kirpilmis_resim_genislik = $kirpma_verileri['width'];
+		$kirpilmis_resim_yukseklik = $kirpma_verileri['height'];
+		$kirpilmis_resim_x = $kirpma_verileri['x'];
+		$kirpilmis_resim_y = $kirpma_verileri['y'];
+		$kirpilmis_resim_donme_acisi = $kirpma_verileri['rotate'];
+
+		list($gelen_resim_genislik,$gelen_resim_yukseklik) = getimagesize($gelen_resim_yolu);
+		$yeni_genislik = 100;
+		$yeni_yukseklik = 100;
+		$kalite = 75; //yüksek kaliteye yakın IJP standardı 75
+
+		switch ($gelen_resim_tipi){
+			case 'image/jpg':
+			case 'image/jpeg': $eski_resim = imagecreatefromjpeg($gelen_resim_yolu);break;
+			case 'image/png': $eski_resim = imagecreatefrompng($gelen_resim_yolu);break;
+			case 'image/gif': $eski_resim = imagecreatefromgif($gelen_resim_yolu);break;
+		}
+
+		if($kirpilmis_resim_donme_acisi==90){
+			//list($gelen_resim_yukseklik,$gelen_resim_genislik) = getimagesize($gelen_resim_yolu);
+			//resmi sağa döndürür
+			//cropper.js nin bilinen bir hatası yüzünden çok büyük boyutlu dosyalarda otomatik döndürme yapıyor. Özellikle iphone fotoğraflarında.
+			//onun sola yatırdığı fotoğrafları tekrar sağa yatırmak için bunu kullanıyorum.
+			//imagerotate saatin tersi yönünde döndürür.
+			$eski_resim = imagerotate($eski_resim,-90,0);
+
+			if($eski_resim){
+				$mesaj_ek = "döndürme başarılı";
+			}else{
+				$mesaj_ek = "döndürme başarısız";
+			}
+		}elseif ($kirpilmis_resim_donme_acisi==-90){
+			//list($gelen_resim_yukseklik,$gelen_resim_genislik) = getimagesize($gelen_resim_yolu);
+			//resmi sağa döndürür
+			//cropper.js nin bilinen bir hatası yüzünden çok büyük boyutlu dosyalarda otomatik döndürme yapıyor. Özellikle iphone fotoğraflarında.
+			//onun sağa yatırdığı fotoğrafları tekrar sola yatırmak için bunu kullanıyorum.
+			//imagerotate saatin tersi yönünde döndürür.
+			$eski_resim = imagerotate($eski_resim,90,0);
+
+			if($eski_resim){
+				$mesaj_ek = "döndürme başarılı";
+			}else{
+				$mesaj_ek = "döndürme başarısız";
+			}
+		}
+
+		$kirpilmis_resim_tuvali = imagecreatetruecolor($kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
+
+		imagecopyresampled($kirpilmis_resim_tuvali,$eski_resim,0,0,$kirpilmis_resim_x,$kirpilmis_resim_y,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
+		$yeni_resim_tuvali = imagecreatetruecolor($yeni_genislik,$yeni_yukseklik);
+
+		imagecopyresampled($yeni_resim_tuvali,$kirpilmis_resim_tuvali,0,0,0,0,$yeni_genislik,$yeni_genislik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);//resmi 100x100 küçülttüm.
+
+		$uye_id = $_SESSION['id'];
+		$kayit_yeri = "../resimler/kullanici/$uye_id.jpg";
+		$profil_resmi = "resimler/kullanici/$uye_id.jpg";
+		$kaydet = imagejpeg($yeni_resim_tuvali,$kayit_yeri, $kalite);
+
+		imagedestroy($yeni_resim_tuvali);
+		imagedestroy($kirpilmis_resim_tuvali);
+		imagedestroy($eski_resim);
+
+		if($kaydet){
+			$resmin_yolunu_kaydet_sql = mysqli_query($baglan,"update uyeler set profil_resmi='$profil_resmi' where id=$uye_id");
+
+			if ($resmin_yolunu_kaydet_sql) {
+				$mesaj = "Başarılı. Resim kaydedildi.";
+				$hata = false;
+			}
+			else {
+				$mesaj = "Resmi kaydederken sorun yaşadık. Tekrar dene";
+				$hata = true;
+			}
+		}
+		else{
+			$mesaj = "Başarısız. Resim kaydedilemedi tekrar deneyin";
+			$hata = true;
+		}
+
+		$json_dizi = ["mesaj"=>$mesaj,"profil_resmi"=>$profil_resmi,"hata"=>$hata];
+		echo json_encode($json_dizi);
+	}else{
+		$mesaj = "Dosya türünüz geçerli bir resim türü değil. Dosyanız jpg, png, gif";
+		$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
+		echo json_encode($json_dizi);
+		return;
 	}
-
-	$kirpilmis_resim_tuvali = imagecreatetruecolor($kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
-
-	imagecopyresampled($kirpilmis_resim_tuvali,$eski_resim,0,0,$kirpilmis_resim_x,$kirpilmis_resim_y,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);
-	$yeni_resim_tuvali = imagecreatetruecolor($yeni_genislik,$yeni_yukseklik);
-
-	imagecopyresampled($yeni_resim_tuvali,$kirpilmis_resim_tuvali,0,0,0,0,$yeni_genislik,$yeni_genislik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);//resmi 100x100 küçülttüm.
-
-	$uye_id = $_SESSION['id'];
-	$kayit_yeri = "../resimler/kullanici/$uye_id.jpg";
-	$profil_resmi = "resimler/kullanici/$uye_id.jpg";
-	$kaydet = imagejpeg($yeni_resim_tuvali,$kayit_yeri, $kalite);
-
-	imagedestroy($yeni_resim_tuvali);
-	imagedestroy($kirpilmis_resim_tuvali);
-	imagedestroy($eski_resim);
-
-	if($kaydet){
-		$resmin_yolunu_kaydet_sql = mysqli_query($baglan,"update uyeler set profil_resmi='$profil_resmi' where id=$uye_id");
-
-		$mesaj = $resmin_yolunu_kaydet_sql?"Başarılı. Resim kaydedildi.":"Resmi kaydederken sorun yaşadık. Tekrar dene";
-	}
-	else{
-		$mesaj = "Başarısız. Resim kaydedilemedi tekrar deneyin";
-	}
-
-	$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
-	echo json_encode($json_dizi);
 }
 ?>

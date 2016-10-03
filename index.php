@@ -44,7 +44,8 @@ else{
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <title>translate to me</title>
-
+	<link rel="alternate" type="application/rss+xml"
+		  href="http://localhost/translateto.me/rss/rss.php" title="translateto.me">
     <!-- CSS  -->
     <link href="css/cropper.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -289,7 +290,10 @@ else{
 <!-- Wrap the image or canvas element with a block element (container) -->
 <div class="resmi-kirp-kapsayici">
 	<div class="resmi-kirp-govde">
-		<blockquote class="resmi-kirp-aciklama">Resmine ift tıklarsan resmi kırpma veya taşıma moduna girersin.</blockquote>
+		<blockquote class="resmi-kirp-aciklama">Resmine çift tıklarsan resmi kırpma veya taşıma moduna girersin.</blockquote>
+		<div class="surec">
+			<div class="surec-ic"></div>
+		</div>
 		<div class="resmi-kirp-div">
 			<img id="kullanici-resmi-img" style="max-width: 100%" src="">
 		</div>
@@ -297,9 +301,6 @@ else{
 		<div class="on-izleme circle"></div>
 	</div>
 </div>
-<input type="hidden" value="<? echo $uye_id ?>" id="uye-id">
-<input type="hidden" value="<? echo $adi_soyadi ?>" id="adi-soyadi">
-<input type="hidden" value="<? echo $profil_resmi ?>" id="profil-resmi">
 <!--  Scripts-->
 <script src="jquery3/jquery-3.1.0.min.js"></script>
 <script src="js/islemler.js"></script>
