@@ -311,7 +311,7 @@ $(document).ready(function(){
             url: 'php/islemler.php',
             type: 'post',
             dataType: 'json',
-            data: veriler+"&metin-sahibi-id="+metin_sahibi_id
+            data: veriler
         }).done(function(data) {
             console.log(data);
             Materialize.toast(data.mesaj,4000);
@@ -458,10 +458,14 @@ $(document).ready(function(){
                     }, false);
                 }
                 return myXhr;
+            },
+            beforeSend:function () {
+                //hata durumunda tekrar yüklemek için.
+                eski_profil_resmi = $(".collection-item.avatar>img").attr('src');
+                $(".collection-item.avatar>img").attr('src','resimler/yukleniyor.gif');
             }
         }).done(function(data) {
             if(!data.hata){
-                $(".collection-item.avatar>img").attr('src','');
                 $(".collection-item.avatar>img").attr('src',data.profil_resmi);
                 $(".resmi-kirp-kapsayici").fadeOut(100);
                 $(".resmi-kirp-kapsayici").data("isOpen",false);
@@ -470,6 +474,7 @@ $(document).ready(function(){
                 $(".resmi-kirp-kapsayici").fadeOut(100);
                 $(".resmi-kirp-kapsayici").data("isOpen",false);
                 Materialize.toast(data.mesaj,5000);
+                $(".collection-item.avatar>img").attr('src',eski_profil_resmi);
             }
         }).fail(function(data) {
             console.log("error",data);

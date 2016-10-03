@@ -500,7 +500,7 @@ if(isset($resmi_yukle)){
 
 	if(!getimagesize($gelen_resim_yolu)){
 		$mesaj = "Resim dosyanız bozuk. Lütfen geçerli bir resim dosyası yükleyin.";
-		$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
+		$json_dizi = ["mesaj"=>$mesaj,"hata"=>true];
 		echo json_encode($json_dizi);
 		return;
 	}
@@ -510,7 +510,7 @@ if(isset($resmi_yukle)){
 
 		if($gelen_resim_boyutu > 15*MB){
 			$mesaj = "Resim boyutu çok yüksek. En fazla 15 mb boyutunda resim yükleyebilirsiniz";
-			$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
+			$json_dizi = ["mesaj"=>$mesaj,"hata"=>true];
 			echo json_encode($json_dizi);
 			return;
 		}
@@ -569,8 +569,12 @@ if(isset($resmi_yukle)){
 		imagecopyresampled($yeni_resim_tuvali,$kirpilmis_resim_tuvali,0,0,0,0,$yeni_genislik,$yeni_genislik,$kirpilmis_resim_genislik,$kirpilmis_resim_yukseklik);//resmi 100x100 küçülttüm.
 
 		$uye_id = $_SESSION['id'];
-		$kayit_yeri = "../resimler/kullanici/$uye_id.jpg";
-		$profil_resmi = "resimler/kullanici/$uye_id.jpg";
+		//tarayıcı resim adresi gönderildiğinde aynı adres gönderildiği için resim farklı olsa bile
+		//aynı önbellekteki resmi gösteriyordu. Bunu atlatmak için resmi her yüklediğimde
+		//adını değiştiriyorum
+		$resim_adi = substr(md5($uye_id),0,5)."_$uye_id.jpg";
+		$kayit_yeri = "../resimler/kullanici/$resim_adi";
+		$profil_resmi = "resimler/kullanici/$resim_adi";
 		$kaydet = imagejpeg($yeni_resim_tuvali,$kayit_yeri, $kalite);
 
 		imagedestroy($yeni_resim_tuvali);
@@ -598,7 +602,7 @@ if(isset($resmi_yukle)){
 		echo json_encode($json_dizi);
 	}else{
 		$mesaj = "Dosya türünüz geçerli bir resim türü değil. Dosyanız jpg, png, gif";
-		$json_dizi = ["mesaj"=>$mesaj,"hata"=>false];
+		$json_dizi = ["mesaj"=>$mesaj,"hata"=>true];
 		echo json_encode($json_dizi);
 		return;
 	}

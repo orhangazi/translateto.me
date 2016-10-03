@@ -6,7 +6,7 @@
  * Time: 22:13
  */
 include "../php/baglan.php";
-$yenileri_getir_sql = mysqli_query($baglan,"select baslik,orijinal_metin,kayit_tarihi from orijinal_metinler where kayit_tarihi>=DATE_SUB(CURDATE(), INTERVAL 20 DAY) order by kayit_tarihi desc");
+$yenileri_getir_sql = mysqli_query($baglan,"select baslik,orijinal_metin,DATE_FORMAT(kayit_tarihi,'%a, %d %b %Y %T') as kayit_tarihi from orijinal_metinler where kayit_tarihi>=DATE_SUB(CURDATE(), INTERVAL 20 DAY) order by kayit_tarihi desc");
 
 $veriler = "";
 if(mysqli_num_rows($yenileri_getir_sql)>0){
@@ -21,7 +21,7 @@ if(mysqli_num_rows($yenileri_getir_sql)>0){
 						  <link>http://www.translateto.me</link>
 						  <description>$orijinal_metin</description>
 						  <pubDate>$kayit_tarihi</pubDate>
-						  <guid>$guid</guid>
+						  <guid isPermaLink='false'>$guid</guid>
 					  </item>";
 		$guid++;
 	}
@@ -30,8 +30,9 @@ if(mysqli_num_rows($yenileri_getir_sql)>0){
 header("Content-type: text/xmlnn");
 
 echo "<?xml version='1.0' encoding='UTF-8'?>
-<rss version='2.0'>
+<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>
 	<channel>
+		<atom:link href='http://localhost/translateto.me/rss/rss.php' rel='self' type='application/rss+xml' />
 		<title>translateto.me</title>
 		<link>http://www.translateto.me</link>
 		<description>Geliştirici: Orhan Gazi Kılıç</description>
