@@ -53,6 +53,7 @@ if (!empty(is_numeric($orijinal_metin_id))){
         $orijinal_metin_nesne = mysqli_fetch_object($orijinal_metin_sql);
         $orijinal_metin_id = $orijinal_metin_nesne->id;
         $orijinal_metin = $orijinal_metin_nesne->orijinal_metin;
+		$orijinal_kelime_sayisi = count(explode(' ',$orijinal_metin));
         $baslik = $orijinal_metin_nesne->baslik;
         $metin_sahibi_id = $orijinal_metin_nesne->metin_sahibi_id;
         $metin_sahibi_notu = $orijinal_metin_nesne->metin_sahibi_notu;
@@ -62,15 +63,16 @@ if (!empty(is_numeric($orijinal_metin_id))){
         $guncelleme_tarihi = $orijinal_metin_nesne->guncelleme_tarihi;
 
         $icerik = ["baslik"=>$baslik,
-                        "orijinal_metin"=>$orijinal_metin,
-                        "orijinal_dil_id"=>$orijinal_dil_id,
-                        "cevrilecek_dil_id"=>$cevrilecek_dil_id,
-                        "kayit_tarihi"=>$kayit_tarihi,
-                        "orijinal_metin_id"=>$orijinal_metin_id,
-                        "guncelleme_tarihi"=>$guncelleme_tarihi,
-                        "metin_sahibi_id"=>$metin_sahibi_id,
-                        "metin_sahibi_notu"=>$metin_sahibi_notu,
-                        "cevirisi_var_mi" => true];
+					"orijinal_kelime_sayisi"=>$orijinal_kelime_sayisi,
+					"orijinal_metin"=>$orijinal_metin,
+					"orijinal_dil_id"=>$orijinal_dil_id,
+					"cevrilecek_dil_id"=>$cevrilecek_dil_id,
+					"kayit_tarihi"=>$kayit_tarihi,
+					"orijinal_metin_id"=>$orijinal_metin_id,
+					"guncelleme_tarihi"=>$guncelleme_tarihi,
+					"metin_sahibi_id"=>$metin_sahibi_id,
+					"metin_sahibi_notu"=>$metin_sahibi_notu,
+					"cevirisi_var_mi" => true];
 
         $json = json_encode($icerik);
         echo $json;
@@ -89,6 +91,8 @@ if ($ceviri_kaydedilsin_mi){
 	$orijinal_kelime_sayisi = $_POST['orijinal_kelime_sayisi'];
 	$cevrilmis_kelime_sayisi = count(explode(' ',$cevrilmis_metin));
 	//yüzdeye göre
+
+	//var_dump($orijinal_kelime_sayisi);
 	$ceviri_miktari = ($cevrilmis_kelime_sayisi*100)/$orijinal_kelime_sayisi;
 
     $kayitli_mi_sql = mysqli_query($baglan,"select id from cevrilmis_metinler where orijinal_metin_id=$orijinal_metin_id");

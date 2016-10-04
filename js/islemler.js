@@ -148,15 +148,12 @@ $(document).ready(function(){
         var orijinal_kelime_sayisi = $("#orijinal-kelime-sayisi").val();
 
         var veriler = {
-            "uye_id":uye_id,
             "orijinal_metin_id":orijinal_metin_id,
             "cevrilmis_metin":cevrilmis_metin,
             "cevrilecek_dil_id":cevrilecek_dil_id,
             "orijinal_kelime_sayisi":orijinal_kelime_sayisi,
             "ceviri_kaydedilsin_mi":true
         };
-
-        console.log(veriler);
 
         $.ajax({
             url: 'php/islemler.php',
