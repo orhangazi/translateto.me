@@ -11,6 +11,38 @@ $(document).ready(function(){
     //select elementlerini başlatır
     $('select').material_select();
 
+    //scroll en alta indiğinde yeni kartları yükler
+    anasayfa_kart_limiti = 15;
+
+        $(window).scroll(function () {
+            if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                if(anasayfa_kart_limiti!=undefined){
+                    var veriler = {"anasayfa_kart_limiti":anasayfa_kart_limiti,
+                        "kartlari_yukle":true};
+                    $.ajax({
+                        url: 'php/islemler.php',
+                        type: 'post',
+                        dataType: 'json',
+                        data: veriler
+                    }).done(function(data) {
+                        if(!data.hata){
+                            $("div.container.orta>.row").append(data.mesaj);
+                            console.log("1",anasayfa_kart_limiti);
+                            anasayfa_kart_limiti = data.sonraki_limit;
+                            console.log("2",data.sonraki_limit);
+                        }
+                        else{
+                            Materialize.toast(data.mesaj,5000);
+                        }
+                    }).fail(function(data) {
+                        console.log("error",data);
+                    });
+                }
+            }
+        });
+
+
+
     //esc tuşuna basınca çeviri kapsayıcı div i kaybolur
     $(document).keydown(function (e) {
         //hangi katman açık
@@ -48,7 +80,6 @@ $(document).ready(function(){
             }
         }
     });
-
 
     //giriş divini açılmasını sağlar
     $(".giris-kayit-divini-ac").click(function(e){
@@ -161,8 +192,20 @@ $(document).ready(function(){
             dataType: 'json',
             data:veriler
         }).done(function(data) {
-            // Materialize.toast(message, displayLength, className, completeCallback);
-            Materialize.toast(data.mesaj, 4000); // 4000 is the duration of the toast
+            if(!data.hata){
+                // Materialize.toast(message, displayLength, className, completeCallback);
+                Materialize.toast(data.mesaj, 4000); // 4000 is the duration of the toast
+            }
+            else{
+                if(!data.giris_yapilmis_mi){
+                    $(".giris-kayit-divini-ac").click();
+                    // Materialize.toast(message, displayLength, className, completeCallback);
+                    Materialize.toast(data.mesaj, 10000); // 4000 is the duration of the toast
+                }else {
+                    // Materialize.toast(message, displayLength, className, completeCallback);
+                    Materialize.toast(data.mesaj, 4000); // 4000 is the duration of the toast
+                }
+            }
         }).fail(function(data) {
             console.log("error",data);
         });
@@ -170,8 +213,6 @@ $(document).ready(function(){
 
     //yorumları kaydeder
     function yorumuKaydet() {
-        var adi_soyadi = $("#adi-soyadi").val();
-        var profil_resmi = $("#profil-resmi").val();
         var yorum = $("#yorum").val();
         var orijinal_metin_id = $("#orijinal-metin-id").val();
 
@@ -188,11 +229,16 @@ $(document).ready(function(){
             data:veriler
         }).done(function(data) {
             if(!data.hata){
-                var gonderilen_yorum = "<ul class='collection'><li class='collection-item avatar'><img src='"+data.profil_resmi+"' alt='"+data.adi_soyadi+"' class='circle'> <span class='title'><strong>"+data.adi_soyadi+"</strong></span> <p>"+yorum+"</p> </li> </ul>";
-                $(".yorumlar-modal-ic>h5").empty();
-                $(".yorumlar-modal-ic").append(gonderilen_yorum);
-                $("#yorumlar-modal > div.modal-content").animate({ scrollTop: $("#yorumlar-modal > div.modal-content")[0].scrollHeight }, 1000);
-                $("#yorum").val("");
+                if(data.giris_yapilmis_mi){
+                    var gonderilen_yorum = "<ul class='collection'><li class='collection-item avatar'><img src='"+data.profil_resmi+"' alt='"+data.adi_soyadi+"' class='circle'> <span class='title'><strong>"+data.adi_soyadi+"</strong></span> <p>"+yorum+"</p> </li> </ul>";
+                    $(".yorumlar-modal-ic>h5").empty();
+                    $(".yorumlar-modal-ic").append(gonderilen_yorum);
+                    $("#yorumlar-modal > div.modal-content").animate({ scrollTop: $("#yorumlar-modal > div.modal-content")[0].scrollHeight }, 1000);
+                    $("#yorum").val("");
+                }else {
+                    $(".giris-kayit-divini-ac").click();
+                    Materialize.toast(data.mesaj,15000);
+                }
             }
             else{
                 // Materialize.toast(message, displayLength, className, completeCallback);
@@ -204,11 +250,12 @@ $(document).ready(function(){
     }
 
     //yorumları gösterir
-    $(".yorumlari-gor").click(function () {
+    gosterilecek_yorum_limiti = 0;
+    $(".yorumlari-gor,.daha-fazla-yorum").click(function () {
         var orijinal_metin_id = $("#orijinal-metin-id").val();
-
         var veriler = {
             "orijinal_metin_id":orijinal_metin_id,
+            "gosterilecek_yorum_limiti":gosterilecek_yorum_limiti,
             "yorumlari_goster":true
         };
 
@@ -219,35 +266,47 @@ $(document).ready(function(){
             data:veriler
         }).done(function(data) {
             if (!data.yorum_yok) {
-                $(".yorumlar-modal-ic").html(data.mesaj);
-                $("#yorumlar-modal").openModal({
-                    ready: function () {
-                        //çeviri yapıldığı esnada bu yorumlara bakıldığından
-                        //ceviri-kapsayici nın açıkmı özelliğini kapalı yapıyorum ki islemler.js nin
-                        //üst taraflarında esc ye basıldığında kapanmasını engelliyorum.
-                        //kapatılırken de complate özelliğiyle tekrar açık olduğunu true yapıyorum ve
-                        //böylece esc ye basınca çalışacak.
-                        $(".ceviri-kapsayici").data("isOpen",false);
-                        $("#yorumlar-modal > div.modal-content").animate({ scrollTop: $("#yorumlar-modal > div.modal-content")[0].scrollHeight }, 1000);
-                        $("#yorum").focus();
-                    },
-                    complete: function() {
-                        $(".ceviri-kapsayici").data("isOpen",true);
-                    }
-                });
+                console.log(gosterilecek_yorum_limiti);
+                if(gosterilecek_yorum_limiti==0){
+                    $(".yorumlar-modal-ic").html(data.mesaj);
+                    $("#yorumlar-modal").openModal({
+                        ready: function () {
+                            //çeviri yapıldığı esnada bu yorumlara bakıldığından
+                            //ceviri-kapsayici nın açıkmı özelliğini kapalı yapıyorum ki islemler.js nin
+                            //üst taraflarında esc ye basıldığında kapanmasını engelliyorum.
+                            //kapatılırken de complate özelliğiyle tekrar açık olduğunu true yapıyorum ve
+                            //böylece esc ye basınca çalışacak.
+                            $(".ceviri-kapsayici").data("isOpen",false);
+                            $("#yorumlar-modal > div.modal-content").animate({ scrollTop: $("#yorumlar-modal > div.modal-content")[0].scrollHeight }, 1000);
+                            $("#yorum").focus();
+                        },
+                        complete: function() {
+                            $(".ceviri-kapsayici").data("isOpen",true);
+                        }
+                    });
+                }else {
+                    $(".yorumlar-modal-ic").prepend(data.mesaj);
+                }
+                gosterilecek_yorum_limiti = data.sonraki_limit;
             } else {
-                $(".yorumlar-modal-ic").html("<h5 style='text-align: center'>Hiç yorum yok</h5>");
-                $("#yorumlar-modal").openModal({
-                    ready: function () {
-                        $(".ceviri-kapsayici").data("isOpen",false);
-                        $("#yorum").focus();
-                        console.log("açık");
-                    },
-                    complete: function() {
-                        $(".ceviri-kapsayici").data("isOpen",true);
-                        console.log("kapalı");
-                    }
-                });
+                if(gosterilecek_yorum_limiti==0){
+                    $(".yorumlar-modal-ic").html("<h5 style='text-align: center'>Hiç yorum yok</h5>");
+                    $("#yorumlar-modal").openModal({
+                        ready: function () {
+                            $(".ceviri-kapsayici").data("isOpen",false);
+                            $("#yorum").focus();
+                            console.log("açık");
+                        },
+                        complete: function() {
+                            $(".ceviri-kapsayici").data("isOpen",true);
+                            console.log("kapalı");
+                        }
+                    });
+                }else {
+                    gosterilecek_yorum_limiti = 0;
+                    yorum_yok_div = "<div class='card-panel'>"+data.mesaj+"</div>";
+                    $(".yorumlar-modal-ic").prepend(yorum_yok_div);
+                }
             }
         }).fail(function(data) {
             console.log("error",data);
@@ -290,6 +349,11 @@ $(document).ready(function(){
 
     //çeviri yapılacak metin eklemek için ortamı açar
     $(".yeni-cevrilecek-metin-ekle").click(function () {
+        if(!giris_yapilmis_mi()){
+            Materialize.toast("Önce giriş yapmanız ya da kayıt olmanız gerekli.",5000);
+            return;
+        }
+
         $(".cevrilecek-metin-ekleme-divi").fadeIn(100);
         $(".cevrilecek-metin-ekleme-divi").data("isOpen",true);
 
@@ -353,8 +417,11 @@ $(document).ready(function(){
     //uclu gorunume ve ikili gorunume geçirir
     $(".gorunumu-degistir").click(function () {
         var kart_genisligi = $(".kart").width();
+        console.log(kart_genisligi);
         if(kart_genisligi>322){
-            $(".kart").animate({width:"322px"},300);
+            //$(".kart").animate({width:"322px"},300);
+            $(".kart").addClass("s4");
+            $(".kart").removeClass("s6");
             //düğmede 2li sütun simgesini gösterir
             $(".gorunumu-degistir > i").html("pause");
             $(".gorunumu-degistir").tooltip('remove');
@@ -363,7 +430,9 @@ $(document).ready(function(){
             console.log(gorunum);
         }
         else{
-            $(".kart").animate({width:"483px"},300);
+            //$(".kart").animate({width:"483px"},300);
+            $(".kart").addClass("s6");
+            $(".kart").removeClass("s4");
             //düğmede 3lü sütun simgesini gösterir
             $(".gorunumu-degistir > i").html("view_week");
             $(".gorunumu-degistir").tooltip('remove');
@@ -520,6 +589,7 @@ $(document).ready(function(){
     }
 });
 
+//bilgileri günceller
 function bilgileri_guncelle(form) {
     var form_adi = $(form).attr("id");
     var veriler = $(form).serialize()+"&form-adi="+form_adi+"&bilgileri_guncelle=true";
@@ -536,4 +606,16 @@ function bilgileri_guncelle(form) {
     }).fail(function(data) {
         console.log("error",data);
     });
+}
+
+//giriş yapılıp yapılmadığını kontrol eder
+function giris_yapilmis_mi(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', "php/islemler.php?uye_girisi_yapilmis_mi=true",false);
+    httpRequest.send();
+    veri = JSON.parse(httpRequest.response);
+    console.log(veri.giris_yapilmis_mi);
+    $('.giris-kayit-divini-ac').click();
+    return veri.giris_yapilmis_mi;
+    //ajax içerisinde return kullanılamadığı için normal ajax yazmak zorunda kaldım.
 }

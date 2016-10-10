@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Created by PhpStorm.
  * User: Orhan Gazi
@@ -6,6 +6,70 @@
  * Time: 16:39
  */
 include "baglan.php";
+
+$kartlari_yukle = $_POST['kartlari_yukle'];
+if($kartlari_yukle){
+	$burdan = $_POST['anasayfa_kart_limiti'];
+	$eklenecek_kart_sayisi = 15;
+	if ($burdan == 15) {
+		$buraya = $burdan+$eklenecek_kart_sayisi;
+		$limit = "limit 15,$buraya";
+	}
+	else {
+		$buraya = $burdan+$eklenecek_kart_sayisi;
+		$limit = "limit $burdan,$buraya";
+	}
+
+	$html="";
+	$orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id order by orijinal_metinler.id desc $limit;");
+
+	if($orijinal_metinler_sql){
+		if(mysqli_num_rows($orijinal_metinler_sql)>0){
+			while($orijinal_metinler = mysqli_fetch_object($orijinal_metinler_sql)){
+				$orijinal_metin_id = $orijinal_metinler->orijinal_metin_id;
+				$orijinal_metin = $orijinal_metinler->orijinal_metin;
+				$orijinal_kelime_sayisi = count(explode(' ',$orijinal_metin));
+				$baslik = $orijinal_metinler->baslik;
+				$metin_sahibi_id = $orijinal_metinler->metin_sahibi_id;
+				$metin_sahibi_notu = $orijinal_metinler->metin_sahibi_notu;
+				$guncellenme_tarihi = $orijinal_metinler->guncellenme_tarihi;
+				$adi_soyadi_kart = $orijinal_metinler->adi_soyadi;
+				$orijinal_dil_id = $orijinal_metinler->orijinal_dil_id;
+				$cevrilecek_dil_id = $orijinal_metinler->cevrilecek_dil_id;
+				$profil_resmi = $orijinal_metinler->profil_resmi != ""?"$orijinal_metinler->profil_resmi":"resimler/kullanici_resmi_50x50.png";
+				$orijinal_metin = substr($orijinal_metin,0,150);
+
+				$html.="<div class='col s4 kart' style='width:483px'>
+                                <div class='card-panel hoverable teal lighten-5'>
+                                	<!--<div class='kart-ust'></div>-->
+                                    <h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
+                                    <span class='kart-aciklama blue-text text-darken-2'>$orijinal_metin</span>
+                                    <div class='kart-alt'>
+                                        <div class='chip'>
+                                            <img src='$profil_resmi' alt='Contact Person'>
+                                            <a class='' href='javascript:void(0)'>$adi_soyadi_kart</a>
+                                        </div>
+                                        <div style='position: absolute; right: 0px; bottom: 0px;'>
+                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='tumunu-goster waves-effect waves-light btn'>Göster</a>
+                                        <a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id&orijinal_kelime_sayisi=$orijinal_kelime_sayisi' class='cevir waves-effect waves-light btn'>Çevir</a>
+										</div>
+                                        
+                                    </div>
+                                </div>
+                            </div>";
+			}
+			$json_dizi = ["mesaj"=>$html,"sonraki_limit"=>$buraya,"hata"=>false];
+		}
+		else{
+			$json_dizi = ["mesaj"=>"<div style='clear: both;'></div><div class='card-panel'><h4 class='truncate' style='text-align: center'>Gösterilecek çeviri kalmadı</h4></div>","hata"=>false];
+		}
+		echo json_encode($json_dizi);
+	}
+	else{
+		$json_dizi = ["mesaj"=>"Bir sorun oldu, en kısa zamanda düzelteceğiz. Daha sonra tekrar deneyebilirsin","hata"=>true];
+		echo json_encode($json_dizi);
+	}
+}
 
 //çeviri yapılması için açılan div e verileri gönderir
 $orijinal_metin_id = $_GET["orijinal_metin_id"];
@@ -79,57 +143,92 @@ if (!empty(is_numeric($orijinal_metin_id))){
     }
 }
 
+//üye girişi yapılıp yapılmadığını kontrol eder
+$uye_girisi_yapilmis_mi = $_GET['uye_girisi_yapilmis_mi'];
+if($uye_girisi_yapilmis_mi){
+	$uye_id = $_SESSION['id'];
+	if(!empty($uye_id)){
+		$hata = false;
+		$mesaj = "Giriş yapılmış";
+		$giris_yapilmis_mi = true;
+	}
+	else {
+		$hata = false;
+		$mesaj = "Giriş yapılmamış";
+		$giris_yapilmis_mi = false;
+	}
+	echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj,"giris_yapilmis_mi"=>$giris_yapilmis_mi]);
+	//echo $giris_yapilmis_mi;
+}
+
 //çeviriyi kaydeder
 $ceviri_kaydedilsin_mi = $_POST['ceviri_kaydedilsin_mi'];
 if ($ceviri_kaydedilsin_mi){
 	$uye_id = $_SESSION['id'];
-    $orijinal_metin_id = $_POST['orijinal_metin_id'];
-    $cevrilecek_dil_id = $_POST['cevrilecek_dil_id'];
-    $cevirmen_notu = mysqli_real_escape_string($baglan,$_POST['cevirmen_notu']);
-    $cevrilmis_metin = mysqli_real_escape_string($baglan,$_POST['cevrilmis_metin']);
+	if(!empty($uye_id)){
+		$orijinal_metin_id = $_POST['orijinal_metin_id'];
+		$cevrilecek_dil_id = $_POST['cevrilecek_dil_id'];
+		$cevirmen_notu = mysqli_real_escape_string($baglan,$_POST['cevirmen_notu']);
+		$cevrilmis_metin = mysqli_real_escape_string($baglan,$_POST['cevrilmis_metin']);
 
-	$orijinal_kelime_sayisi = $_POST['orijinal_kelime_sayisi'];
-	$cevrilmis_kelime_sayisi = count(explode(' ',$cevrilmis_metin));
-	//yüzdeye göre
+		$orijinal_kelime_sayisi = $_POST['orijinal_kelime_sayisi'];
+		$cevrilmis_kelime_sayisi = count(explode(' ',$cevrilmis_metin));
+		//yüzdeye göre
 
-	//var_dump($orijinal_kelime_sayisi);
-	$ceviri_miktari = ($cevrilmis_kelime_sayisi*100)/$orijinal_kelime_sayisi;
+		//var_dump($orijinal_kelime_sayisi);
+		$ceviri_miktari = ($cevrilmis_kelime_sayisi*100)/$orijinal_kelime_sayisi;
 
-    $kayitli_mi_sql = mysqli_query($baglan,"select id from cevrilmis_metinler where orijinal_metin_id=$orijinal_metin_id");
-    if (mysqli_num_rows($kayitli_mi_sql)>0){
-    	$cevrilmis_metin_id_nesne = mysqli_fetch_object($kayitli_mi_sql);
-		$cevrilmis_metin_id = $cevrilmis_metin_id_nesne->id;
-        $guncelle_sql = mysqli_query($baglan,"update cevrilmis_metinler set cevrilmis_metin='$cevrilmis_metin' where orijinal_metin_id=$orijinal_metin_id");
-		$hata = ($guncelle_sql)?false:true;
-		$ayni_kisi_mi_sql = mysqli_query($baglan,"select id from ceviriler where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
-		if(mysqli_num_rows($ayni_kisi_mi_sql)>0){
-			$ceviriler_vt_guncelle = mysqli_query($baglan,"update ceviriler set ceviri_miktari=$ceviri_miktari where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
-			$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
+		$kayitli_mi_sql = mysqli_query($baglan,"select id from cevrilmis_metinler where orijinal_metin_id=$orijinal_metin_id");
+		if (mysqli_num_rows($kayitli_mi_sql)>0){
+			$cevrilmis_metin_id_nesne = mysqli_fetch_object($kayitli_mi_sql);
+			$cevrilmis_metin_id = $cevrilmis_metin_id_nesne->id;
+			$guncelle_sql = mysqli_query($baglan,"update cevrilmis_metinler set cevrilmis_metin='$cevrilmis_metin' where orijinal_metin_id=$orijinal_metin_id");
+			$hata = ($guncelle_sql)?false:true;
+			$ayni_kisi_mi_sql = mysqli_query($baglan,"select id from ceviriler where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
+			if(mysqli_num_rows($ayni_kisi_mi_sql)>0){
+				$ceviriler_vt_guncelle = mysqli_query($baglan,"update ceviriler set ceviri_miktari=$ceviri_miktari where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
+				$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
+			}
+			else{
+				$ceviriler_vt_ekle = mysqli_query($baglan,"insert into ceviriler(ceviren_id, cevrilmis_metin_id, ceviri_miktari) values('$uye_id','$cevrilmis_metin_id','$ceviri_miktari')");
+				$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
+			}
 		}
 		else{
-			$ceviriler_vt_ekle = mysqli_query($baglan,"insert into ceviriler(ceviren_id, cevrilmis_metin_id, ceviri_miktari) values('$uye_id','$cevrilmis_metin_id','$ceviri_miktari')");
-			$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
+			$ceviriyi_kaydet_sql = mysqli_query($baglan,"insert into cevrilmis_metinler(orijinal_metin_id,cevrilmis_metin,dil_id) values('$orijinal_metin_id','$cevrilmis_metin','$cevrilecek_dil_id')");
+			$son_cevrilmis_metin_id = mysqli_insert_id($baglan);
+			$ceviriler_vt_kaydet = mysqli_query($baglan,"insert into ceviriler(cevrilmis_metin_id,ceviren_id,ceviri_miktari) values('$son_cevrilmis_metin_id','$uye_id','$ceviri_miktari')");
+			$hata = ($ceviriyi_kaydet_sql)?false:true;
+			$mesaj = ($ceviriyi_kaydet_sql)?"Çeviri başarıyla kaydedildi":"Çeviri kaydedilemedi. Tekrar deneyin";
 		}
-    }
-    else{
-        $ceviriyi_kaydet_sql = mysqli_query($baglan,"insert into cevrilmis_metinler(orijinal_metin_id,cevrilmis_metin,dil_id) values('$orijinal_metin_id','$cevrilmis_metin','$cevrilecek_dil_id')");
-		$son_cevrilmis_metin_id = mysqli_insert_id($baglan);
-		$ceviriler_vt_kaydet = mysqli_query($baglan,"insert into ceviriler(cevrilmis_metin_id,ceviren_id,ceviri_miktari) values('$son_cevrilmis_metin_id','$uye_id','$ceviri_miktari')");
-        $hata = ($ceviriyi_kaydet_sql)?false:true;
-        $mesaj = ($ceviriyi_kaydet_sql)?"Çeviri başarıyla kaydedildi":"Çeviri kaydedilemedi. Tekrar deneyin";
-    }
-
-    echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
+	}
+	else {
+		$mesaj = "Lütfen kaydetmeden önce giriş yapın ya da kaydolun. Eğer biraz çeviri yazdıysanız kaybolmaması için kayıt ekranını kapatıp önce metninizi kopyalayın. Giriş yaptıktan sonra sayfa yenilenecek.";
+		$hata = true;
+	}
+    echo json_encode(["hata"=>$hata,"giris_yapilmis_mi"=>$giris_yapilmis_mi,"mesaj"=>$mesaj]);
 }
 
 //yorumları gösterir
 $yorumlari_goster = $_POST['yorumlari_goster'];
 if ($yorumlari_goster){
     $orijinal_metin_id = $_POST['orijinal_metin_id'];
+
     $orijinal_metin_id = mysqli_real_escape_string($baglan,$orijinal_metin_id);
+	$eklenecek_yorum_sayisi = 20;
+
+	$burdan = $_POST['gosterilecek_yorum_limiti'];
+	if ($burdan == 0) {
+		$buraya = $burdan+$eklenecek_yorum_sayisi;
+		$limit = "limit 0,20";
+	}
+	else {
+		$buraya = $burdan+$eklenecek_yorum_sayisi;
+		$limit = "limit $burdan,$buraya";
+	}
 
     //$kayitli_mi_sql = mysqli_query($baglan,"select * from yorumlar where orijinal_metin_id=$orijinal_metin_id");
-    $yorumlari_getir_sql = mysqli_query($baglan,"select * from yorumlar,uyeler where orijinal_metin_id=$orijinal_metin_id and yorumlar.yorum_sahibi_id = uyeler.id order by yorumlar.id asc");
+    $yorumlari_getir_sql = mysqli_query($baglan,"select * from yorumlar,uyeler where orijinal_metin_id=$orijinal_metin_id and yorumlar.yorum_sahibi_id = uyeler.id order by yorumlar.id asc $limit");
     if (mysqli_num_rows($yorumlari_getir_sql)>0){
         $hata = ($yorumlari_getir_sql)?false:true;
         $yorumlar_html = "";
@@ -147,7 +246,7 @@ if ($yorumlari_goster){
                         </ul>";
         }
 
-        $mesaj = ["mesaj"=>$yorumlar_html];
+        $mesaj = ["mesaj"=>$yorumlar_html,"sonraki_limit"=>$buraya];
     }
     else{
         $mesaj = ["yorum_yok"=>true,"mesaj"=>"Hiç yorum yok"];
@@ -160,22 +259,30 @@ if ($yorumlari_goster){
 //yorum kaydı yapar
 $yorum_kaydedilsin_mi = $_POST['yorum_kaydedilsin_mi'];
 if ($yorum_kaydedilsin_mi){
-    $orijinal_metin_id = $_POST['orijinal_metin_id'];
-    $yorum = mysqli_real_escape_string($baglan,trim($_POST['yorum']));
-    $yorum_sahibi_id = $_SESSION['id'];
-	$adi_soyadi = $_SESSION["adi_soyadi"];
-	$profil_resmi = $_SESSION["profil_resmi"];
-    if(!empty($yorum)){
-        $yorumu_kaydet_sql = mysqli_query($baglan,"insert into yorumlar(yorum_sahibi_id,yorum,orijinal_metin_id) values('$yorum_sahibi_id','$yorum','$orijinal_metin_id')");
-        $hata = ($yorumu_kaydet_sql)?false:true;
-        $mesaj = ($yorumu_kaydet_sql)?"Yorum başarıyla başarıyla kaydedildi":"Çeviri yorum kaydedilemedi. Tekrar deneyin";
-    }
-    else{
-        $hata = true;
-        $mesaj = "Boş yorum kaydedilemez";
-    }
+	$yorum_sahibi_id = $_SESSION['id'];
+	if(!empty($yorum_sahibi_id)){
+		$orijinal_metin_id = $_POST['orijinal_metin_id'];
+		$yorum = mysqli_real_escape_string($baglan,trim($_POST['yorum']));
+		$adi_soyadi = $_SESSION["adi_soyadi"];
+		$profil_resmi = $_SESSION["profil_resmi"];
+		if(!empty($yorum)){
+			$yorumu_kaydet_sql = mysqli_query($baglan,"insert into yorumlar(yorum_sahibi_id,yorum,orijinal_metin_id) values('$yorum_sahibi_id','$yorum','$orijinal_metin_id')");
+			$hata = ($yorumu_kaydet_sql)?false:true;
+			$mesaj = ($yorumu_kaydet_sql)?"Yorum başarıyla başarıyla kaydedildi":"Çeviri yorum kaydedilemedi. Tekrar deneyin";
+		}
+		else{
+			$hata = true;
+			$mesaj = "Boş yorum kaydedilemez";
+		}
 
-    echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj,"adi_soyadi"=>$adi_soyadi,"profil_resmi"=>$profil_resmi]);
+		echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj,"adi_soyadi"=>$adi_soyadi,"profil_resmi"=>$profil_resmi]);
+	}
+	else {
+		$mesaj = "Lütfen kaydetmeden önce giriş yapın ya da kaydolun. Eğer biraz yorum yazdıysanız kaybolmaması için kayıt ekranını kapatıp önce metninizi kopyalayın. Giriş yaptıktan sonra sayfa yenilenecek.";
+		$hata = true;
+		$giris_yapilmis_mi = false;
+		echo json_encode(["hata"=>$hata,"giris_yapilmis_mi"=>$giris_yapilmis_mi,"mesaj"=>$mesaj]);
+	}
 }
 
 //üye kaydı yapar
@@ -252,24 +359,31 @@ if ($giris_yapilsin_mi){
 //çevrilecek metni kaydeder
 $cevrilecek_metin_kaydedilsin_mi=$_POST["cevrilecek-metni-kaydet"];
 if($cevrilecek_metin_kaydedilsin_mi){
-	$metin_basligi = mysqli_real_escape_string($baglan,$_POST["metin-basligi"]);
-	$cevrilen_metin_notu = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin-notu"]);
-	$cevrilen_metin = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin"]);
 	$metin_sahibi_id = $_SESSION["id"];
-	$orijinal_dil_id = mysqli_real_escape_string($baglan,$_POST["orijinal-dil"]);
-	$cevrilecek_dil_id = mysqli_real_escape_string($baglan,$_POST["cevrilecek-dil"]);
+	if(!empty($metin_sahibi_id)){
+		$metin_basligi = mysqli_real_escape_string($baglan,$_POST["metin-basligi"]);
+		$cevrilen_metin_notu = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin-notu"]);
+		$cevrilen_metin = mysqli_real_escape_string($baglan,$_POST["cevrilen-metin"]);
+		$orijinal_dil_id = mysqli_real_escape_string($baglan,$_POST["orijinal-dil"]);
+		$cevrilecek_dil_id = mysqli_real_escape_string($baglan,$_POST["cevrilecek-dil"]);
 
-	if(!empty($metin_basligi) && !empty($cevrilen_metin) && !empty($orijinal_dil_id) && !empty($cevrilecek_dil_id)){
-		$cevrilecek_metni_kaydet_sql = mysqli_query($baglan,"insert into orijinal_metinler(baslik,metin_sahibi_notu,orijinal_metin,metin_sahibi_id,orijinal_dil_id,cevrilecek_dil_id) values('$metin_basligi','$cevrilen_metin_notu','$cevrilen_metin','$metin_sahibi_id','$orijinal_dil_id','$cevrilecek_dil_id')");
+		if(!empty($metin_basligi) && !empty($cevrilen_metin) && !empty($orijinal_dil_id) && !empty($cevrilecek_dil_id)){
+			$cevrilecek_metni_kaydet_sql = mysqli_query($baglan,"insert into orijinal_metinler(baslik,metin_sahibi_notu,orijinal_metin,metin_sahibi_id,orijinal_dil_id,cevrilecek_dil_id) values('$metin_basligi','$cevrilen_metin_notu','$cevrilen_metin','$metin_sahibi_id','$orijinal_dil_id','$cevrilecek_dil_id')");
 
-		$hata = $cevrilecek_metni_kaydet_sql?false:true;
-		$mesaj = $cevrilecek_metni_kaydet_sql?"Metin kaydedildi. Çevirinin herhangi bir aşamasındayken de görebilirsiniz.":"Metin kaydedilemedi. Tekrar deneyin.";
+			$hata = $cevrilecek_metni_kaydet_sql?false:true;
+			$mesaj = $cevrilecek_metni_kaydet_sql?"Metin kaydedildi. Çevirinin herhangi bir aşamasındayken de görebilirsiniz.":"Metin kaydedilemedi. Tekrar deneyin.";
+		}
+		else{
+			$hata = true;
+			$mesaj = "Çevirmenlere notun dışında diğer tüm bilgileri girmelisin";
+		}
+
+
 	}
 	else{
 		$hata = true;
-		$mesaj = "Çevirmenlere notun dışında diğer tüm bilgileri girmelisin";
+		$mesaj = "Metni kaydetmeden önce kaydolmanız veya giriş yapmanız gerekli. Lütfen metninizin kaybolmaması için metninizi kopyalayıp giriş yapın ve ardından metninizi kaydedin.";
 	}
-
 	echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj]);
 }
 
@@ -576,7 +690,7 @@ if(isset($resmi_yukle)){
 		//tarayıcı resim adresi gönderildiğinde aynı adres gönderildiği için resim farklı olsa bile
 		//aynı önbellekteki resmi gösteriyordu. Bunu atlatmak için resmi her yüklediğimde
 		//adını değiştiriyorum
-		$resim_adi = substr(md5($uye_id),0,5)."_$uye_id.jpg";
+		$resim_adi = substr(md5(uniqid($uye_id,true)),0,5)."_$uye_id.jpg";
 		$kayit_yeri = "../resimler/kullanici/$resim_adi";
 		$profil_resmi = "resimler/kullanici/$resim_adi";
 		$kaydet = imagejpeg($yeni_resim_tuvali,$kayit_yeri, $kalite);
@@ -586,11 +700,21 @@ if(isset($resmi_yukle)){
 		imagedestroy($eski_resim);
 
 		if($kaydet){
+			$eski_resim_sql = mysqli_query($baglan,"select profil_resmi from uyeler where id=$uye_id limit 1");
+			$eski_resim_nesne = mysqli_fetch_object($eski_resim_sql);
+			$eski_resim_yolu = "../$eski_resim_nesne->profil_resmi";
+
 			$resmin_yolunu_kaydet_sql = mysqli_query($baglan,"update uyeler set profil_resmi='$profil_resmi' where id=$uye_id");
 
 			if ($resmin_yolunu_kaydet_sql) {
 				$mesaj = "Başarılı. Resim kaydedildi.";
 				$hata = false;
+
+				$sil = unlink($eski_resim_yolu);
+				if(!$sil){
+					$mesaj = "Eski resim silinemedi";
+					$hata = true;
+				}
 			}
 			else {
 				$mesaj = "Resmi kaydederken sorun yaşadık. Tekrar dene";

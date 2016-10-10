@@ -9,7 +9,7 @@ include "baglan.php";
 
 $uye_id = $_SESSION['id'];
 if(empty($uye_id)){
-	header("Locate:index.php");
+	exit;
 }
 
 $uye_bilgileri_sql = mysqli_query($baglan,"select * from uyeler,ayarlar where uyeler.id=$uye_id and ayarlar.uye_id=$uye_id limit 1");

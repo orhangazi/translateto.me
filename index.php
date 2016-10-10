@@ -37,6 +37,21 @@ if($eposta!=""){
 else{
 	$giris_yapilmis_mi = false;
 }
+
+if($giris_yapilmis_mi){
+	$uye_menusu = "<li>
+			<a class='dropdown-button' data-constrainwidth='false' data-beloworigin='true' data-alignment='right' data-activates='menu' href='#' class='menu'><i class='dropdown-button material-icons small'>reorder</i></a>
+			<!-- Dropdown Structure -->
+			<ul id='menu' class='dropdown-content'>
+				<li><a href='php/islemler.php?cevirdigim_metinler=true' class='cevirdigim-metinler'>Çevirdiklerim</a></li>
+				<li><a href='php/islemler.php?cevirttigim_metinler=true' class='cevirttigim-metinler'>Çevirttiklerim</a></li>
+				<li><a class='gorunumu-degistir tooltipped' data-tooltip='3lü sütun görünümü'><i class='small material-icons'>view_week</i></a></li>
+				<li><a href='php/ayarlar.php' class='ayarlar'>Ayarlar</a></li>
+				<li><a href='index.php?cikis=true'>Çıkış</a></li>
+			</ul>
+		</li>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,20 +71,10 @@ else{
 <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="" class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
-			<li><a class="gorunumu-degistir tooltipped" data-tooltip="3lü sütun görünümü"><i class="small material-icons">view_week</i></a></li>
             <li>
 				<?= $giris_yapilmis_mi == true?"<a>$adi_soyadi</a>":"<a class='giris-kayit-divini-ac'>Giriş Yap ya da Kayıt Ol</a>"; ?>
 			</li>
-			<li>
-				<a class='dropdown-button' data-constrainwidth="false" data-beloworigin="true" data-alignment="right" data-activates="menu" href="#" class="menu"><i class="dropdown-button material-icons small">reorder</i></a>
-				<!-- Dropdown Structure -->
-				<ul id='menu' class='dropdown-content'>
-					<li><a href="php/islemler.php?cevirdigim_metinler=true" class="cevirdigim-metinler">Çevirdiklerim</a></li>
-					<li><a href="php/islemler.php?cevirttigim_metinler=true" class="cevirttigim-metinler">Çevirttiklerim</a></li>
-					<li><a href="php/ayarlar.php" class="ayarlar">Ayarlar</a></li>
-					<li><a href="index.php?cikis=true">Çıkış</a></li>
-				</ul>
-			</li>
+			<?= $uye_menusu ?>
         </ul>
     </div>
 </nav>
@@ -78,7 +83,7 @@ else{
         <div class="row">
             <?
                 $html="";
-                $orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id order by orijinal_metinler.id desc;");
+                $orijinal_metinler_sql = mysqli_query($baglan,"select *,uyeler.adi_soyadi,uyeler.profil_resmi,orijinal_metinler.id as orijinal_metin_id from orijinal_metinler,uyeler where uyeler.id=orijinal_metinler.metin_sahibi_id order by orijinal_metinler.id desc limit 0,15;");
 
                 while($orijinal_metinler = mysqli_fetch_object($orijinal_metinler_sql)){
                     $orijinal_metin_id = $orijinal_metinler->orijinal_metin_id;
@@ -94,7 +99,7 @@ else{
                     $profil_resmi = $orijinal_metinler->profil_resmi != ""?"$orijinal_metinler->profil_resmi":"resimler/kullanici_resmi_50x50.png";
                     $orijinal_metin = substr($orijinal_metin,0,150);
 
-                    $html.="<div class='col s4 kart' style='width:483px'>
+                    $html.="<div class='col s6 kart'>
                                 <div class='card-panel hoverable teal lighten-5'>
                                 	<!--<div class='kart-ust'></div>-->
                                     <h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
@@ -220,7 +225,7 @@ else{
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="#kayit-ol">Kayıt Ol</a></li>
+                    <li class="tab col s3"><a id="kayit-olma-sekmesi" href="#kayit-ol">Kayıt Ol</a></li>
                     <li class="tab col s3"><a href="#giris-yap">Giriş Yap</a></li>
                 </ul>
             </div>
@@ -265,6 +270,7 @@ else{
 <div id="yorumlar-modal" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h5>Yorumlar</h5>
+		<a href="javascript:void(0);" class="daha-fazla-yorum">daha fazla yorum göster</a>
         <p class="yorumlar-modal-ic">A bunch of text</p>
     </div>
     <div class="modal-footer">
