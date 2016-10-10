@@ -122,11 +122,6 @@ $(document).ready(function(){
         });
     });
 
-    //yeni kullanıcı kaydeder
-    $("#kaydolma-formu").submit(function (e) {
-
-    });
-
     //kaydet düğmesine tıklandığında
     $(".kaydet").click(function() {
         ceviriyiKaydet();
@@ -229,8 +224,11 @@ $(document).ready(function(){
             data:veriler
         }).done(function(data) {
             if(!data.hata){
+                console.log(data);
                 if(data.giris_yapilmis_mi){
                     var gonderilen_yorum = "<ul class='collection'><li class='collection-item avatar'><img src='"+data.profil_resmi+"' alt='"+data.adi_soyadi+"' class='circle'> <span class='title'><strong>"+data.adi_soyadi+"</strong></span> <p>"+yorum+"</p> </li> </ul>";
+                    console.log(gonderilen_yorum);
+
                     $(".yorumlar-modal-ic>h5").empty();
                     $(".yorumlar-modal-ic").append(gonderilen_yorum);
                     $("#yorumlar-modal > div.modal-content").animate({ scrollTop: $("#yorumlar-modal > div.modal-content")[0].scrollHeight }, 1000);
@@ -397,7 +395,8 @@ $(document).ready(function(){
             console.log("error",data);
         });
     });
-    //kullanıcının çevirdiği metinleri gösterir
+
+    //kullanıcının çevirttiği metinleri gösterir
     $(".cevirttigim-metinler").click(function (e) {
         e.preventDefault();
         var url = $(this).attr("href");

@@ -275,7 +275,9 @@ if ($yorum_kaydedilsin_mi){
 			$mesaj = "Boş yorum kaydedilemez";
 		}
 
-		echo json_encode(["hata"=>$hata,"mesaj"=>$mesaj,"adi_soyadi"=>$adi_soyadi,"profil_resmi"=>$profil_resmi]);
+		$giris_yapilmis_mi = true;
+
+		echo json_encode(["hata"=>$hata,"giris_yapilmis_mi"=>$giris_yapilmis_mi,"mesaj"=>$mesaj,"adi_soyadi"=>$adi_soyadi,"profil_resmi"=>$profil_resmi]);
 	}
 	else {
 		$mesaj = "Lütfen kaydetmeden önce giriş yapın ya da kaydolun. Eğer biraz yorum yazdıysanız kaybolmaması için kayıt ekranını kapatıp önce metninizi kopyalayın. Giriş yaptıktan sonra sayfa yenilenecek.";
