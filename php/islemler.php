@@ -39,7 +39,7 @@ if($kartlari_yukle){
 				$profil_resmi = $orijinal_metinler->profil_resmi != ""?"$orijinal_metinler->profil_resmi":"resimler/kullanici_resmi_50x50.png";
 				$orijinal_metin = substr($orijinal_metin,0,150);
 
-				$html.="<div class='col s4 kart' style='width:483px'>
+				$html.="<div class='col s6 kart'>
                                 <div class='card-panel hoverable teal lighten-5'>
                                 	<!--<div class='kart-ust'></div>-->
                                     <h6><a href='php/islemler.php?orijinal_metin_id=$orijinal_metin_id' class='cevir' style='color: rgba(0, 0, 0, 0.87);'>$baslik</a></h6>
@@ -71,11 +71,12 @@ if($kartlari_yukle){
 	}
 }
 
-//çeviri yapılması için açılan div e verileri gönderir
+//çeviri yapılması için açılan div e
+//orjinal metinle varsa yapılmış çeviriyi gösterir
 $orijinal_metin_id = $_GET["orijinal_metin_id"];
 $orijinal_metin_id = mysqli_real_escape_string($baglan,$orijinal_metin_id);
 if (!empty(is_numeric($orijinal_metin_id))){
-    $metinler_sql = mysqli_query($baglan,"select * from orijinal_metinler,cevrilmis_metinler where orijinal_metinler.id=$orijinal_metin_id and orijinal_metinler.id=cevrilmis_metinler.orijinal_metin_id;");//çevirisinin olup olmadığına bakıyor
+    $metinler_sql = mysqli_query($baglan,"select * from orijinal_metinler,cevrilmis_metinler where orijinal_metinler.id=$orijinal_metin_id and orijinal_metinler.id=cevrilmis_metinler.orijinal_metin_id order by cevrilmis_metinler.id desc limit 1;");//çevirisinin olup olmadığına bakıyor
 
     //çevirisi varsa
     if (mysqli_num_rows($metinler_sql)>0){
@@ -178,28 +179,17 @@ if ($ceviri_kaydedilsin_mi){
 		//var_dump($orijinal_kelime_sayisi);
 		$ceviri_miktari = ($cevrilmis_kelime_sayisi*100)/$orijinal_kelime_sayisi;
 
-		$kayitli_mi_sql = mysqli_query($baglan,"select id from cevrilmis_metinler where orijinal_metin_id=$orijinal_metin_id");
-		if (mysqli_num_rows($kayitli_mi_sql)>0){
-			$cevrilmis_metin_id_nesne = mysqli_fetch_object($kayitli_mi_sql);
-			$cevrilmis_metin_id = $cevrilmis_metin_id_nesne->id;
-			$guncelle_sql = mysqli_query($baglan,"update cevrilmis_metinler set cevrilmis_metin='$cevrilmis_metin' where orijinal_metin_id=$orijinal_metin_id");
-			$hata = ($guncelle_sql)?false:true;
-			$ayni_kisi_mi_sql = mysqli_query($baglan,"select id from ceviriler where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
-			if(mysqli_num_rows($ayni_kisi_mi_sql)>0){
-				$ceviriler_vt_guncelle = mysqli_query($baglan,"update ceviriler set ceviri_miktari=$ceviri_miktari where ceviren_id=$uye_id and cevrilmis_metin_id=$cevrilmis_metin_id");
-				$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
-			}
-			else{
-				$ceviriler_vt_ekle = mysqli_query($baglan,"insert into ceviriler(ceviren_id, cevrilmis_metin_id, ceviri_miktari) values('$uye_id','$cevrilmis_metin_id','$ceviri_miktari')");
-				$mesaj = ($guncelle_sql)?"Çeviri başarıyla güncellendi":"Çeviri güncellenemedi. Tekrar deneyin";
-			}
-		}
-		else{
+		$ayni_metinden_var_mi_sql = mysqli_query($baglan,"select id from cevrilmis_metinler where orijinal_metin_id=$orijinal_metin_id and cevrilmis_metin='$cevrilmis_metin'");
+		if (!mysqli_num_rows($ayni_metinden_var_mi_sql)>0){
 			$ceviriyi_kaydet_sql = mysqli_query($baglan,"insert into cevrilmis_metinler(orijinal_metin_id,cevrilmis_metin,dil_id) values('$orijinal_metin_id','$cevrilmis_metin','$cevrilecek_dil_id')");
 			$son_cevrilmis_metin_id = mysqli_insert_id($baglan);
 			$ceviriler_vt_kaydet = mysqli_query($baglan,"insert into ceviriler(cevrilmis_metin_id,ceviren_id,ceviri_miktari) values('$son_cevrilmis_metin_id','$uye_id','$ceviri_miktari')");
 			$hata = ($ceviriyi_kaydet_sql)?false:true;
 			$mesaj = ($ceviriyi_kaydet_sql)?"Çeviri başarıyla kaydedildi":"Çeviri kaydedilemedi. Tekrar deneyin";
+		}
+		else{
+			$hata = true;
+			$mesaj = "Metnin aynısı daha önce kaydedilmiş.";
 		}
 	}
 	else {
@@ -427,7 +417,7 @@ if($cevirdigim_metinler){
 	echo json_encode(["mesaj"=>$html]);
 }
 
-//kullanıcının çevirdiği metinler
+//kullanıcının çevirdiği metinleri gösterir
 $cevirttigim_metinler = $_GET['cevirttigim_metinler'];
 if($cevirttigim_metinler){
 	$uye_id = $_SESSION["id"];

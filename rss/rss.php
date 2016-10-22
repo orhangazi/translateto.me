@@ -6,7 +6,7 @@
  * Time: 22:13
  */
 include "../php/baglan.php";
-$yenileri_getir_sql = mysqli_query($baglan,"select baslik,orijinal_metin,DATE_FORMAT(kayit_tarihi,'%a, %d %b %Y %T') as kayit_tarihi from orijinal_metinler where kayit_tarihi>=DATE_SUB(CURDATE(), INTERVAL 20 DAY) order by kayit_tarihi desc");
+$yenileri_getir_sql = mysqli_query($baglan,"select baslik,orijinal_metin,DATE_FORMAT(kayit_tarihi,'%a, %d %b %Y %T') as kayit_tarihi from orijinal_metinler where kayit_tarihi>=DATE_SUB(CURDATE(), INTERVAL 20 DAY) order by id desc");
 
 $veriler = "";
 if(mysqli_num_rows($yenileri_getir_sql)>0){
@@ -18,7 +18,7 @@ if(mysqli_num_rows($yenileri_getir_sql)>0){
 
 		$veriler .= "<item>
 						  <title>$baslik</title>
-						  <link>http://www.translateto.me</link>
+						  <link>http://www.translateto.me/$guid</link>
 						  <description>$orijinal_metin</description>
 						  <pubDate>$kayit_tarihi</pubDate>
 						  <guid isPermaLink='false'>$guid</guid>
@@ -26,6 +26,9 @@ if(mysqli_num_rows($yenileri_getir_sql)>0){
 		$guid++;
 	}
 }
+$son_yapilandirma_tarihi_sql = mysqli_query($baglan,"select DATE_FORMAT(kayit_tarihi,'%a, %d %b %Y %T') as kayit_tarihi from orijinal_metinler order by id desc limit 1 ");
+$son_yapilandirma_tarihi_nesne = mysqli_fetch_object($son_yapilandirma_tarihi_sql);
+$son_yapilandirma_tarihi = $son_yapilandirma_tarihi_nesne->kayit_tarihi;
 
 header("Content-type: text/xmlnn");
 
@@ -36,11 +39,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>
 		<title>translateto.me</title>
 		<link>http://www.translateto.me</link>
 		<description>Geliştirici: Orhan Gazi Kılıç</description>
-		<url>http://www.xul.fr/xul.gif</url>
-		<image>
-			<url>http://www.xul.fr/xul-icon.gif</url>
-			<link>http://www.xul.fr/en/index.php</link>
-		</image>
+		<lastBuildDate>$son_yapilandirma_tarihi</lastBuildDate>
 		$veriler
 </channel>
 </rss>";
