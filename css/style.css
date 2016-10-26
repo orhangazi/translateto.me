@@ -200,7 +200,6 @@ h6{
 }
 
 #kaydolma-formu > button.btn,#giris-formu > button.btn{
-    display: block;
     width: 100%;
 }
 
